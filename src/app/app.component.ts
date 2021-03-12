@@ -18,6 +18,7 @@ export class AppComponent{
   showFiles = false
 
   files:Map<string,string[]> = filesMap
+  title: string;
 
 
 
