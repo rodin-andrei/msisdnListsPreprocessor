@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import {CommonModule, registerLocaleData} from '@angular/common';
+import {registerLocaleData} from '@angular/common';
 import { DragUploadComponent } from "./drag-upload.component";
 import { NZ_ICONS } from 'ng-zorro-antd/icon';
 import { NZ_I18N, en_US } from 'ng-zorro-antd/i18n';
@@ -10,7 +10,7 @@ import { DemoNgZorroAntdModule } from './ng-zorro-antd.module';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import {NzUploadModule} from "ng-zorro-antd/upload";
-import { DragDropModule } from '@angular/cdk/drag-drop';
+
 
 registerLocaleData(en);
 
@@ -29,7 +29,6 @@ const icons: IconDefinition[] = Object.keys(antDesignIcons).map(key => antDesign
     DemoNgZorroAntdModule,
     HttpClientModule,
     NzUploadModule,
-    DragDropModule
   ],
   bootstrap: [ DragUploadComponent],
   providers: [ { provide: NZ_I18N, useValue: en_US }, { provide: NZ_ICONS, useValue: icons } ]

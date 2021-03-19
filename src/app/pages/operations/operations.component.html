@@ -1,0 +1,60 @@
+<div cdkDropListGroup class="cdk-main">
+  <div class="uploaded-view-container">
+    <H2 class="uploaded-title">Uploaded Files</H2>
+    <cdk-virtual-scroll-viewport class="uploaded-view-port" itemSize="16">
+
+        <div class="example-container">
+            <div    cdkDropList
+                    [cdkDropListData]="getFileNames()"
+                    class="example-list"
+                    cdkDropListSortingDisabled
+                    (cdkDropListDropped)="drop($event)">
+                <div class="example-box" *ngFor="let fileName of getFileNames()" cdkDrag>{{fileName}}</div>
+            </div>
+        </div>
+    </cdk-virtual-scroll-viewport>
+  </div>
+
+  <div class="operate-view-container">
+    <H2 class="operate-title">Operate with</H2>
+    <cdk-virtual-scroll-viewport class="operate-view-port" itemSize="16">
+        <div class="example-container">
+
+            <div    cdkDropList
+                    [cdkDropListData]="operate"
+                    class="example-list"
+                    (cdkDropListDropped)="drop($event)" *ngIf="operate.length === 0; else elseBlock" >
+                <div class="example-box" cdkDrag>{{"Drop here the files"}}</div>
+            </div>
+          <ng-template #elseBlock class="else-block">
+             <div cdkDropList
+                      [cdkDropListData]="operate"
+                      class="example-list"
+                      (cdkDropListDropped)="drop($event)">
+                      <div class="example-box" *ngFor="let fileName of operate" cdkDrag>{{fileName}}</div>
+
+             </div>
+          </ng-template>
+        </div>
+    </cdk-virtual-scroll-viewport>
+  </div>
+  <span class="unique-button">
+  <button nz-button nzType="primary" type="submit"  (click)="getUniqueSubscribers()">Unique</button>
+  </span>
+  <span class="similar-button">
+    <button nz-button nzType="primary" type="submit">Similar</button>
+  </span>
+<!--  <span>-->
+<!--  <cdk-virtual-scroll-viewport class="result-list" itemSize="16">-->
+<!--    <nz-list >-->
+<!--      <nz-list-item *ngFor="let fileName of getResultFileNames()">-->
+<!--        <span nz-typography><mark>[ITEM]</mark></span>-->
+<!--        {{ fileName }}-->
+<!--      </nz-list-item>-->
+<!--    </nz-list>-->
+<!--  </cdk-virtual-scroll-viewport>-->
+<!--</span>-->
+</div>
+
+
+<!--(click)="getSimilarSubscribers()"-->

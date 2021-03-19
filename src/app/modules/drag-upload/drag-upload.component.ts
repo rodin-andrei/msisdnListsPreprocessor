@@ -1,13 +1,12 @@
-import {Component, } from '@angular/core';
-import { NzMessageService} from 'ng-zorro-antd/message/';
+import {Component} from '@angular/core';
 import {NzUploadChangeParam } from 'ng-zorro-antd/upload';
 import { ParserService} from "./parser.service";
 
-export interface UploadedFile {
-  name:string
-  subscribers:string[]
+export let filesMap = new Map<string, File>()
+export interface File {
+  name: string
+  msisdnList: string[]
 }
-export let filesMap = new Map<string, string[]>()
 
 @Component({
   selector: 'app-drag-upload',
@@ -15,25 +14,26 @@ export let filesMap = new Map<string, string[]>()
 })
 
 export  class DragUploadComponent {
-  constructor(private msg: NzMessageService) {}
+  constructor() {}
 
   parser = new ParserService()
 
-  handleChange({ file}: NzUploadChangeParam): void {
+  handleChange({ file, fileList}: NzUploadChangeParam): void {
 
-    var name: string = file.name
+    fileList.forEach(f => {
 
-    if (filesMap.get(name) == undefined) {
+      var name: string = f.originFileObj.name
 
-      console.log()
+      if (filesMap.get(name) == undefined) {
 
-      var subscribers: string[] = this.parser.parseXLS(file.originFileObj)
+        var subscribers: string[] = this.parser.parseXLS(file.originFileObj)
 
-      this.addSubscriber(name, subscribers)
-    }
+        this.addSubscriber(name, {name: name, msisdnList: subscribers})
+      }
+    })
   }
 
-  addSubscriber(name:string, subscribers:string[]) {
-    filesMap.set(name, subscribers)
+  addSubscriber(name:string, file:File) {
+    filesMap.set(name, file)
   }
 }

@@ -1,19 +1,13 @@
-
-    <nz-upload
+<nz-upload
       nzType="drag"
       [nzMultiple]="true"
       (nzChange)="handleChange($event)"
       [nzShowUploadList]="false"
-      nzAction="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-      [nzSize]="0"
-
-    >
+      [nzSize]="0" [nzAccept]="['.xlsx']['.xls']">
       <p class="ant-upload-drag-icon">
         <i nz-icon nzType="inbox"></i>
       </p>
       <p class="ant-upload-text">Click or drag file to this area to upload</p>
-      <p class="ant-upload-hint">
-        Support for a single or bulk upload. Strictly prohibit from uploading company data or other band files
-      </p>
-    </nz-upload>
+</nz-upload>
 
+<!--      nzAction="https://www.mocky.io/v2/5cc8019d300000980a055e76"-->

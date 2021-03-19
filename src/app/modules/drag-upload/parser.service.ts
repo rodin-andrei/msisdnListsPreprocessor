@@ -1,10 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as XLSX from 'xlsx';
 
-export interface MSISDN {
-  msisdn
-}
-
 @Injectable({
   providedIn: 'root'
 })
@@ -14,13 +10,12 @@ export class ParserService {
   constructor(){}
 
   arrayBuffer:any
-  result:string[] = []
 
   parseXLS(file) : string[] {
+    let result:string[] = []
     let fileReader = new FileReader();
     fileReader.readAsArrayBuffer(file);
-    fileReader.onload = (e) => {
-      var list: MSISDN[] = []
+    fileReader.onload = () => {
       this.arrayBuffer = fileReader.result;
       var data = new Uint8Array(this.arrayBuffer);
       var arr = [];
@@ -30,10 +25,9 @@ export class ParserService {
       var first_sheet_name = workbook.SheetNames[0];
       var worksheet = workbook.Sheets[first_sheet_name];
       XLSX.utils.sheet_to_json(worksheet,{raw:true})
-                .forEach(s => list.push(s as MSISDN));
-      list.forEach(s => this.result.push(s.msisdn))
+                .forEach(s => result.push(s as string));
     }
-    return  this.result;
+    return result;
   }
 }
 

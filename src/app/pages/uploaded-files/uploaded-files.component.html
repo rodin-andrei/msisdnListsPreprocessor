@@ -1,0 +1,15 @@
+
+<cdk-virtual-scroll-viewport class="view-port" itemSize="16">
+    <nz-list nzGrid>
+        <div nz-row [nzGutter]="16" >
+            <div nz-col [nzXXl]="8" [nzXl]="4" [nzLg]="6" [nzMd]="6" [nzSm]="12"
+                 [nzXs]="24" *ngFor="let fileName of getFileNames()">
+                <nz-list-item>
+                    <nz-card nzHoverable [nzTitle]="fileName" (click)="showFile(fileName)">
+                        {{getFile(fileName).msisdnList.length}}
+                    </nz-card>
+                </nz-list-item>
+            </div>
+        </div>
+    </nz-list>
+</cdk-virtual-scroll-viewport>
