@@ -9,19 +9,15 @@
   height: 100vh;
 }
 
+.nz-header {
+  height: 130px;
+}
+
 .menu-sidebar {
   position: relative;
   z-index: 10;
   min-height: 100vh;
   box-shadow: 2px 0 6px rgba(0,21,41,.35);
-}
-
-.header-trigger {
-  height: 64px;
-  padding: 20px 24px;
-  font-size: 20px;
-  cursor: pointer;
-  transition: all .3s,padding 0s;
 }
 
 .trigger:hover {
@@ -55,7 +51,8 @@
   vertical-align: middle;
 }
 
-nz-header {
+.nz-header {
+  height: 120px;
   padding: 0;
   width: 100%;
   z-index: 2;
@@ -63,18 +60,19 @@ nz-header {
 
 .app-header {
   position: relative;
-  height: 64px;
+  height: 120px;
   padding: 0;
   background: #fff;
   box-shadow: 0 1px 4px rgba(0,21,41,.08);
 }
 
-nz-content {
-  margin: 24px;
+.inner-content {
+
+  background: #fff;
+  height: inherit;
 }
 
-.inner-content {
-  padding: 24px;
-  background: #fff;
-  height: 100%;
+.drag-upload {
+  height: 120px;
+  background-color: #1890ff;
 }

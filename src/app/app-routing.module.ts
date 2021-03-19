@@ -1,7 +1,11 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { Routes, RouterModule } from '@angular/router';
 
-const routes: Routes = [];
+const routes: Routes = [
+  { path: '', pathMatch: 'full', redirectTo: '/upload' },
+  { path: 'upload', loadChildren: () => import('./pages/uploaded-files/uploaded-files.module').then(m => m.UploadedFilesModule) },
+  { path: 'operations', loadChildren: () => import('./pages/operations/operations-routing.module').then(m => m.OperationsRoutingModule) }
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
