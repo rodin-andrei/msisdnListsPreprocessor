@@ -70,16 +70,24 @@
   height: 98%;
 }
 
+.input-holder {
+  display: inline-block;
+}
+
+.name-input {
+  display: inline-list-item;
+  background-color: #001529;
+}
 
 .unique-button {
-  display: inline-block;
+  display: inline-list-item;
   padding-left: 50px;
   width: 120px;
   height: 80px;
 }
 
 .similar-button {
-  display: inline-block;
+  display: inline-list-item;
   padding-left: 50px;
   width: 120px;
   height: 80px;

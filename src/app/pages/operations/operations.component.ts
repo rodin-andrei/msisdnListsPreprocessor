@@ -1,8 +1,8 @@
 import {Component} from '@angular/core';
 import { CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
-import { filesMap, File } from "../../modules/drag-upload/drag-upload.component";
+import { filesMap } from "../../modules/drag-upload/drag-upload.component";
 
-export let results:Map<string, File> = new Map<string, File>()
+// export let results:Map<string, File> = new Map<string, File>()
 
 @Component({
   selector: 'app-operations',
@@ -11,6 +11,7 @@ export let results:Map<string, File> = new Map<string, File>()
 })
 export class OperationsComponent {
 
+  resultName:string
   operate = []
 
   drop(event: CdkDragDrop<string[]>) {
@@ -28,14 +29,14 @@ export class OperationsComponent {
     return Array.from(filesMap.keys())
   }
 
-  getResultFileNames() {
-    console.log(results.size)
-    return Array.from(results.keys())
-  }
+  // getResultFileNames() {
+  //   console.log(results.size)
+  //   return Array.from(results.keys())
+  // }
 
-  getFile(fileName) {
-    return filesMap.get(fileName)
-  }
+  // getFile(fileName) {
+  //   return filesMap.get(fileName)
+  // }
 
   getUniqueSubscribers() {
 
@@ -46,7 +47,7 @@ export class OperationsComponent {
       filesMap.get(name).msisdnList.forEach(value =>
       msisdnList.add(JSON.stringify(value))))
 
-    results.set(fileName, {name: fileName, msisdnList: Array.from(msisdnList)})
+    filesMap.set(fileName, {name: fileName, msisdnList: Array.from(msisdnList)})
   }
 
   getSimilarSubscribers() {
@@ -73,7 +74,7 @@ export class OperationsComponent {
       })
       fullCheckList.forEach(checkList.add, checkList)
     }
-    results.set(fileName, {name: fileName, msisdnList: Array.from(result)})
+    filesMap.set(fileName, {name: fileName, msisdnList: Array.from(result)})
   }
 
   makeResultFileName(prefix:string) {
