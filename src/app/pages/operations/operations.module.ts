@@ -7,6 +7,7 @@ import {NzListModule} from "ng-zorro-antd/list";
 import {NzWaveModule} from "ng-zorro-antd/core/wave";
 import {NzButtonModule} from "ng-zorro-antd/button";
 import {NzTypographyModule} from "ng-zorro-antd/typography";
+import {NzInputModule} from "ng-zorro-antd/input";
 
 
 @NgModule({
@@ -15,7 +16,7 @@ import {NzTypographyModule} from "ng-zorro-antd/typography";
   exports: [
     OperationsComponent
   ],
-  imports: [DragDropModule, CommonModule, ScrollingModule, NzListModule, NzWaveModule, NzButtonModule, NzTypographyModule]
+    imports: [DragDropModule, CommonModule, ScrollingModule, NzListModule, NzWaveModule, NzButtonModule, NzTypographyModule, NzInputModule]
 })
 
 export class OperationsModule { }

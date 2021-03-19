@@ -1,9 +1,5 @@
 .cdk-main {
-  padding-top: 20px;
-  padding-left: 30px;
-  height: 99%;
-  inline-size: auto;
-
+  height: 90%;
 }
 
 .example-container {
@@ -38,24 +34,25 @@
 
 .uploaded-view-port {
     width: 100%;
-    height: 95%;
+    height: 98%;
 }
 
 .operate-view-port {
-  height: 95%;
+  height: 98%;
 }
 
 .uploaded-view-container {
+  padding-left: 20px;
   display: inline-block;
   width: 25%;
-  height: 98%;
+  height: 90%;
 }
 
 .operate-view-container {
   padding-left: 10px;
   display: inline-block;
   width: 25%;
-  height: 98%;
+  height: 90%;
 }
 
 .uploaded-title {
@@ -71,24 +68,26 @@
 }
 
 .input-holder {
-  display: inline-block;
+  display: inline-flex;
+  padding-left: 40px;
+  padding-top: 30px;
 }
 
 .name-input {
-  display: inline-list-item;
-  background-color: #001529;
+  padding-top: 30px;
 }
 
 .unique-button {
+  padding-top: 30px;
   display: inline-list-item;
-  padding-left: 50px;
-  width: 120px;
-  height: 80px;
+  width: 80px;
+  height: 50px;
 }
 
 .similar-button {
+  padding-top: 30px;
   display: inline-list-item;
-  padding-left: 50px;
+  /*padding-left: 50px;*/
   width: 120px;
   height: 80px;
 }
