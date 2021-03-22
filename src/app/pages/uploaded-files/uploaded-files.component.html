@@ -7,13 +7,15 @@
     <div class="col-2 text-center"><h5>Extension</h5></div>
 
   </div><hr style="height: 2px; color: black; background-color: gray;">
-  <div class="col-12" style="height: 50px" *ngFor="let file of getFiles()">
+  <div class="col-12" style="height: 50px" *ngFor="let file of getFileNames()">
     <div class="row">
-      <div class="col-3 text-left"><h6>{{file.name}}</h6></div>
-      <div class="col-3 text-center">{{file.msisdnList.length}}</div>
-      <div class="col-2 text-center">{{file.unique}}</div>
-      <div class="col-2 text-center">{{file.similar}}</div>
-      <div class="col-2 text-center">{{file.extension}}</div>
+      <div class="col-3 text-left" style="height: 18px; overflow: hidden;
+      font-size: 12px; line-height: 16px;">
+        <h6>{{files.get(file).name}}</h6></div>
+      <div class="col-3 text-center">{{files.get(file).msisdnList.length}}</div>
+      <div class="col-2 text-center">{{files.get(file).unique}}</div>
+      <div class="col-2 text-center">{{files.get(file).similar}}</div>
+      <div class="col-2 text-center">{{files.get(file).extension}}</div>
     </div>
     <hr>
   </div>

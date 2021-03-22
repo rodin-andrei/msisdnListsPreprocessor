@@ -39,33 +39,29 @@ export  class DragUploadComponent {
   parser = new ParserService()
   operations = new OperationsService()
 
-  parse(file) {
-    return this.parser.parseXlsCsv(file)
-  }
+  async handleChange({file, fileList}: NzUploadChangeParam) {
 
-  async handleChange({ file, fileList}: NzUploadChangeParam) {
-
-    fileList.forEach(f => {
+    for (const f of fileList) {
       let fullName = f.originFileObj.name
-      let name: string = fullName.substr(0,fullName.lastIndexOf("."))
+      let name: string = fullName.substr(0, fullName.lastIndexOf("."))
       let extension = fullName.substr(fullName.lastIndexOf(".") + 1)
 
 
       if (filesMap.get(name) == undefined) {
 
-        let subscribers = this.parse(file.originFileObj)
-        // setTimeout(() => {
-        //
-        //   subscribers = this.parser.parseXlsCsv(file.originFileObj)
-        // })
+        let subscribers = await this.getSubscribers(f.originFileObj)
 
-        console.log(subscribers.length)
+        setTimeout(() => {
 
-        // setTimeout(() => {
           this.addFile(name, new File(name, subscribers), extension)
-        // }, 0)
+        }, 0)
       }
-    })
+    }
+  }
+
+  async getSubscribers(file) {
+
+    return this.parser.parseXlsCsv(file)
   }
 
 

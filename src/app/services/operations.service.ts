@@ -8,13 +8,12 @@ export class OperationsService {
 
   constructor() { }
 
-  getUniqueSubscribers(list:File[]) {
+  getUniqueSubscribers(list: File[]) {
     let msisdnList = new Set<string>()
 
     list.forEach(file => file.msisdnList.forEach(value =>
       msisdnList.add(JSON.stringify(value))))
 
-    console.log(msisdnList.size)
     return Array.from(msisdnList)
   }
 

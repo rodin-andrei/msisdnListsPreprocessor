@@ -8,6 +8,9 @@ import { filesMap} from "../../modules/drag-upload/drag-upload.component";
 })
 export class UploadedFilesComponent {
 
+
+  files = filesMap
+
   getFileNames() {
     return Array.from(filesMap.keys())
   }
