@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { filesMap } from "../../modules/drag-upload/drag-upload.component";
+import { filesMap} from "../../modules/drag-upload/drag-upload.component";
 
 @Component({
   selector: 'app-upload',
@@ -16,7 +16,9 @@ export class UploadedFilesComponent {
     return filesMap.get(fileName)
   }
 
-  files = Array.from(filesMap.keys())
+  getFiles() {
+    return filesMap.values()
+  }
 
   showFile(file) {
     console.log(filesMap.get(file).msisdnList)

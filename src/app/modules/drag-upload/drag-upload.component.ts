@@ -39,10 +39,13 @@ export  class DragUploadComponent {
   parser = new ParserService()
   operations = new OperationsService()
 
-  handleChange({ file, fileList}: NzUploadChangeParam): void {
+  parse(file) {
+    return this.parser.parseXlsCsv(file)
+  }
+
+  async handleChange({ file, fileList}: NzUploadChangeParam) {
 
     fileList.forEach(f => {
-
       let fullName = f.originFileObj.name
       let name: string = fullName.substr(0,fullName.lastIndexOf("."))
       let extension = fullName.substr(fullName.lastIndexOf(".") + 1)
@@ -50,16 +53,27 @@ export  class DragUploadComponent {
 
       if (filesMap.get(name) == undefined) {
 
-        var subscribers: string[] = this.parser.parseXlsCsv(file.originFileObj)
+        let subscribers = this.parse(file.originFileObj)
+        // setTimeout(() => {
+        //
+        //   subscribers = this.parser.parseXlsCsv(file.originFileObj)
+        // })
 
-        this.addFile(name, new File(name, subscribers), extension)
+        console.log(subscribers.length)
+
+        // setTimeout(() => {
+          this.addFile(name, new File(name, subscribers), extension)
+        // }, 0)
       }
     })
   }
 
+
   addFile(name:string, file:File, extension:string) {
-    file.setUnique(this.operations.getUniqueSubscribers(new Array(file)).length)
-    file.setSimilar(this.operations.getSimilarSubscribers(new Array(file)).length)
+    setTimeout(()=>{
+      file.setUnique(this.operations.getUniqueSubscribers(new Array(file)).length)
+      file.setSimilar(this.operations.getSimilarSubscribers(new Array(file)).length)
+    }, 0)
     file.setExtension(extension)
     filesMap.set(name, file)
   }

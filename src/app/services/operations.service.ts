@@ -11,42 +11,42 @@ export class OperationsService {
   getUniqueSubscribers(list:File[]) {
     let msisdnList = new Set<string>()
 
-    let subscribers:string[] = list[0].msisdnList
+    list.forEach(file => file.msisdnList.forEach(value =>
+      msisdnList.add(JSON.stringify(value))))
 
-    subscribers.forEach(v => msisdnList.add(JSON.stringify(v)))
-
-    // list.forEach(file => file.msisdnList.forEach(value =>
-    // msisdnList.add(JSON.stringify(value))))
-
-    console.log(msisdnList)
+    console.log(msisdnList.size)
     return Array.from(msisdnList)
   }
 
   getSimilarSubscribers(list:File[]) {
     let checkList = new Set<string>()
-    let fullCheckList = []
     let result = new Set<string>()
+    let fullCheckList = []
 
-    // console.log(list);
+    list[0].msisdnList.forEach(v => {
+      let value = JSON.stringify(v)
 
-    list[0].msisdnList.forEach(v =>
-      checkList.add(JSON.stringify(v)))
+      if (checkList.has(value) && !result.has(value))
+        result.add(value)
 
-    for (let i = 1; i < list.length; i++) {
-      list[i].msisdnList.forEach(v => {
+      if (!checkList.has(value))
+        checkList.add(value)
+    })
 
-        let value = JSON.stringify(v)
+      for (let i = 1 ; i < list.length; i++) {
+        list[i].msisdnList.forEach(v => {
 
-        if (checkList.has(value) && !result.has(value)) {
-          result.add(value)
+          let value = JSON.stringify(v)
 
-        } else {
-          fullCheckList.push(value)
-        }
-      })
-      fullCheckList.forEach(checkList.add, checkList)
-    }
-    // console.log(result)
-    return  Array.from(result)
+          if (checkList.has(value) && !result.has(value)) {
+            result.add(value)
+
+          } else {
+            fullCheckList.push(value)
+          }
+        })
+        fullCheckList.forEach(checkList.add, checkList)
+      }
+    return Array.from(result)
   }
 }

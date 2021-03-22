@@ -11,7 +11,7 @@ export class ParserService {
 
   arrayBuffer:any
 
-  parseXlsCsv(file) : string[] {
+  parseXlsCsv(file) {
     let result:string[] = []
     let fileReader = new FileReader();
     fileReader.readAsArrayBuffer(file);
@@ -27,6 +27,7 @@ export class ParserService {
       XLSX.utils.sheet_to_json(worksheet,{raw:true})
                 .forEach(s => result.push(s as string));
     }
+    console.log(result.length)
     return result;
   }
 }
