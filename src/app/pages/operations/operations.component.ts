@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import { CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
-import { filesMap } from "../../modules/drag-upload/drag-upload.component";
+import { filesMap, File } from "../../modules/drag-upload/drag-upload.component";
+import {OperationsService} from "../../services/operations.service";
 
 @Component({
   selector: 'app-operations',
@@ -9,6 +10,7 @@ import { filesMap } from "../../modules/drag-upload/drag-upload.component";
 })
 export class OperationsComponent {
 
+  operations = new OperationsService()
   resultName?:string;
   operate = []
 
@@ -32,38 +34,21 @@ export class OperationsComponent {
   }
 
   getUniqueSubscribers() {
-    let msisdnList = new Set<string>()
+    let files:File[] = []
+    this.operate.forEach(name => files.push(filesMap.get(name)))
+    let file:File = new File(this.resultName, this.operations.getUniqueSubscribers(files))
 
-    this.operate.forEach(name =>
-      filesMap.get(name).msisdnList.forEach(value =>
-      msisdnList.add(JSON.stringify(value))))
-
-    filesMap.set(this.resultName, {name: this.resultName, msisdnList: Array.from(msisdnList)})
+    file.setExtension("unique.subscribers")
+    filesMap.set(this.resultName, file)
   }
 
   getSimilarSubscribers() {
-    let checkList = new Set<string>()
-    let fullCheckList = []
-    let result = new Set<string>()
+    let files:File[] = []
+    this.operate.forEach(name => files.push(filesMap.get(name)))
+    let file:File = new File(this.resultName, this.operations.getSimilarSubscribers(files))
 
-    filesMap.get(this.operate[0]).msisdnList.forEach(v =>
-      checkList.add(JSON.stringify(v)))
-
-    for (let i = 1; i < this.operate.length; i++) {
-      filesMap.get(this.operate[i]).msisdnList.forEach(v => {
-
-        let value = JSON.stringify(v)
-
-        if (checkList.has(value) && !result.has(value)) {
-          result.add(value)
-
-        } else {
-          fullCheckList.push(value)
-        }
-      })
-      fullCheckList.forEach(checkList.add, checkList)
-    }
-    filesMap.set(this.resultName, {name: this.resultName, msisdnList: Array.from(result)})
+    file.setExtension("similar.subscribers")
+    filesMap.set(this.resultName, file)
   }
 }
 

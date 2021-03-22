@@ -7,6 +7,9 @@
                 <nz-list-item>
                     <nz-card nzHoverable [nzTitle]="fileName" (click)="showFile(fileName)">
                         {{getFile(fileName).msisdnList.length}}
+                      <br>{{getFile(fileName).unique}}
+                      <br>{{getFile(fileName).similar}}
+                      <br>{{getFile(fileName).extension}}
                     </nz-card>
                 </nz-list-item>
             </div>
