@@ -50,7 +50,7 @@ export  class DragUploadComponent {
 
       if (filesMap.get(name) == undefined) {
 
-        var subscribers: string[] = this.parser.parseXLS(file.originFileObj)
+        var subscribers: string[] = this.parser.parseXlsCsv(file.originFileObj)
 
         this.addFile(name, new File(name, subscribers), extension)
       }

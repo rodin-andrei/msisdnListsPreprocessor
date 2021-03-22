@@ -1,18 +1,20 @@
+<cdk-virtual-scroll-viewport class="view-port" itemSize="16" style="background-color: white">
+  <div class="row" style="padding-top: 15px">
+    <div class="col-3 text-center"><h5>Name</h5></div>
+    <div class="col-3 text-center"><h5>Number of records</h5></div>
+    <div class="col-2 text-center"><h5>Unique</h5></div>
+    <div class="col-2 text-center"><h5>Similar</h5></div>
+    <div class="col-2 text-center"><h5>Extension</h5></div>
 
-<cdk-virtual-scroll-viewport class="view-port" itemSize="16">
-    <nz-list nzGrid>
-        <div nz-row [nzGutter]="16" >
-            <div nz-col [nzXXl]="8" [nzXl]="4" [nzLg]="6" [nzMd]="6" [nzSm]="12"
-                 [nzXs]="24" *ngFor="let fileName of getFileNames()">
-                <nz-list-item>
-                    <nz-card nzHoverable [nzTitle]="fileName" (click)="showFile(fileName)">
-                        {{getFile(fileName).msisdnList.length}}
-                      <br>{{getFile(fileName).unique}}
-                      <br>{{getFile(fileName).similar}}
-                      <br>{{getFile(fileName).extension}}
-                    </nz-card>
-                </nz-list-item>
-            </div>
-        </div>
-    </nz-list>
+  </div><hr style="height: 2px; color: black; background-color: gray;">
+  <div class="col-12" style="height: 50px" *ngFor="let fileName of getFileNames()">
+    <div class="row">
+      <div class="col-3 text-left"><h6>{{fileName}}</h6></div>
+      <div class="col-3 text-center">{{getFile(fileName).msisdnList.length}}</div>
+      <div class="col-2 text-center">Uniq</div>
+      <div class="col-2 text-center">qew</div>
+      <div class="col-2 text-center">qwe</div>
+    </div>
+    <hr>
+  </div>
 </cdk-virtual-scroll-viewport>

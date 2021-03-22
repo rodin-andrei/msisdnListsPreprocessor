@@ -9,7 +9,6 @@ import { CommonModule } from "@angular/common";
 import {DragDropModule} from '@angular/cdk/drag-drop';
 
 
-
 @NgModule({
   imports: [
     UploadRoutingModule,
@@ -18,7 +17,7 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
     NzGridModule,
     NzCardModule,
     CommonModule,
-    DragDropModule,
+    DragDropModule
 
   ],
   declarations: [

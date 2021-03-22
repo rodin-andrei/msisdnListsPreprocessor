@@ -11,7 +11,7 @@ export class ParserService {
 
   arrayBuffer:any
 
-  parseXLS(file) : string[] {
+  parseXlsCsv(file) : string[] {
     let result:string[] = []
     let fileReader = new FileReader();
     fileReader.readAsArrayBuffer(file);
