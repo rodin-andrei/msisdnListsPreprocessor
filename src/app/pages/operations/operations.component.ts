@@ -1,8 +1,6 @@
 import {Component} from '@angular/core';
 import { CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
-import { filesMap, File } from "../../modules/drag-upload/drag-upload.component";
-
-export let results:Map<string, File> = new Map<string, File>()
+import { filesMap } from "../../modules/drag-upload/drag-upload.component";
 
 @Component({
   selector: 'app-operations',
@@ -11,7 +9,12 @@ export let results:Map<string, File> = new Map<string, File>()
 })
 export class OperationsComponent {
 
+  resultName?:string;
   operate = []
+
+  onInput(event: KeyboardEvent) {
+    this.resultName = (event.target as HTMLInputElement).value;
+  }
 
   drop(event: CdkDragDrop<string[]>) {
     if (event.previousContainer === event.container) {
@@ -28,30 +31,17 @@ export class OperationsComponent {
     return Array.from(filesMap.keys())
   }
 
-  getResultFileNames() {
-    console.log(results.size)
-    return Array.from(results.keys())
-  }
-
-  getFile(fileName) {
-    return filesMap.get(fileName)
-  }
-
   getUniqueSubscribers() {
-
-    let fileName:string = this.makeResultFileName( 'Unique_from_')
     let msisdnList = new Set<string>()
 
     this.operate.forEach(name =>
       filesMap.get(name).msisdnList.forEach(value =>
       msisdnList.add(JSON.stringify(value))))
 
-    results.set(fileName, {name: fileName, msisdnList: Array.from(msisdnList)})
+    filesMap.set(this.resultName, {name: this.resultName, msisdnList: Array.from(msisdnList)})
   }
 
   getSimilarSubscribers() {
-
-    let fileName:string = this.makeResultFileName( 'Similar_from_')
     let checkList = new Set<string>()
     let fullCheckList = []
     let result = new Set<string>()
@@ -73,18 +63,7 @@ export class OperationsComponent {
       })
       fullCheckList.forEach(checkList.add, checkList)
     }
-    results.set(fileName, {name: fileName, msisdnList: Array.from(result)})
-  }
-
-  makeResultFileName(prefix:string) {
-    let fileName:string = prefix
-
-    this.operate.forEach(name =>
-      fileName = fileName.concat(name + '_&_'))
-
-    fileName = fileName.slice(0, -3)
-
-    return fileName
+    filesMap.set(this.resultName, {name: this.resultName, msisdnList: Array.from(result)})
   }
 }
 

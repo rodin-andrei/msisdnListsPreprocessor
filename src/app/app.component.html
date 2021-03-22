@@ -13,17 +13,25 @@
       <li nz-submenu nzOpen nzTitle="Menu" nzIcon="dashboard">
         <ul>
           <li nz-menu-item>
-            <a routerLink="/upload" (click)="routingLink = 'upload' ">Uploaded Files</a>
+<!--              routerLinkActive="active">-->
+            <a (click)="routingLink = 'upload' ">Uploaded Files</a>
+                  <!--routerLink="upload"-->
+
           </li>
           <li nz-menu-item>
-            <a routerLink="/operations" (click)="routingLink = 'operations'">Operations</a>
+<!--             routerLinkActive="active">-->
+            <a (click)="routingLink = 'operations'">Operations</a>
+<!--              routerLink="operations" -->
           </li>
         </ul>
       </li>
-      <li nz-submenu nzOpen nzTitle="Uploaded File" nzIcon="form">
+      <li nz-submenu nzOpen nzTitle="Result Files" nzIcon="form">
         <ul>
           <li nz-menu-item nzMatchRouter>
-            <a>Basic Form</a>
+            <a>Unique Subscribers</a>
+          </li>
+          <li nz-menu-item nzMatchRouter>
+            <a>Similar Subscribers</a>
           </li>
         </ul>
       </li>
@@ -37,11 +45,9 @@
     </nz-header>
 
     <nz-content>
-      <ng-container *ngIf="routingLink === 'upload'">
-        <app-upload ></app-upload>
-      </ng-container>
-      <ng-container *ngIf="routingLink === 'operations'">
-        <app-operations ></app-operations>
+      <ng-container  >
+        <app-upload *ngIf="routingLink === 'upload'"></app-upload>
+        <app-operations *ngIf="routingLink === 'operations'"></app-operations>
       </ng-container>
     </nz-content>
   </nz-layout>
