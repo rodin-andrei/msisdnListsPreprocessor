@@ -18,6 +18,7 @@ import {NzGridModule} from "ng-zorro-antd/grid";
 import {NzCardModule} from "ng-zorro-antd/card";
 import {DragDropModule} from "@angular/cdk/drag-drop";
 import {OperationsModule} from "./pages/operations/operations.module";
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 
@@ -51,6 +52,7 @@ registerLocaleData(en);
     DragDropModule,
     DragUploadModule,
     OperationsModule,
+    NgbModule,
   ],
   providers: [],
   exports: [

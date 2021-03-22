@@ -26,7 +26,7 @@ export  class DragUploadComponent {
 
       if (filesMap.get(name) == undefined) {
 
-        var subscribers: string[] = this.parser.parseXLS(file.originFileObj)
+        var subscribers: string[] = this.parser.parseXlsCsv(file.originFileObj)
 
         this.addSubscriber(name, {name: name, msisdnList: subscribers})
       }
