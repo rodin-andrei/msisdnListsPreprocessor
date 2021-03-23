@@ -13,6 +13,7 @@ export class OperationsComponent {
   operations = new OperationsService()
   resultName?:string;
   operate = []
+  blackList = []
 
   onInput(event: KeyboardEvent) {
     this.resultName = (event.target as HTMLInputElement).value;
@@ -27,6 +28,19 @@ export class OperationsComponent {
           event.previousIndex,
           event.currentIndex);
     }
+  }
+
+  dropBlack(event: CdkDragDrop<string[]>) {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    } else {
+      transferArrayItem(event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex);
+    }
+    alert(this.operate);
+    alert(this.blackList);
   }
 
   getFileNames() {

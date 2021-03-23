@@ -1,5 +1,6 @@
 <div cdkDropListGroup class="cdk-main">
   <div class="row"><button type="button" class="btn btn-primary col-2" (click)="popMenuShow()" style="height: 60px">Get Unique</button></div>
+
   <div class="uploaded-view-container">
     <H3 class="uploaded-title">Uploaded Files</H3>
     <cdk-virtual-scroll-viewport class="uploaded-view-port" itemSize="16">
@@ -36,6 +37,29 @@
         </div>
     </cdk-virtual-scroll-viewport>
   </div>
+
+  <div class="operate-view-container">
+    <H3 class="operate-title">Black-Lisst</H3>
+    <cdk-virtual-scroll-viewport class="operate-view-port" itemSize="16">
+      <div class="example-container">
+        <div    cdkDropList
+                [cdkDropListData]="blackList"
+                class="example-list"
+                (cdkDropListDropped)="dropBlack($event)" *ngIf="blackList.length === 0; else elseBlackList" >
+          <div class="example-box" cdkDrag>{{"Drop here the black-list files"}}</div>
+        </div>
+        <ng-template #elseBlackList class="else-blocked">
+          <div cdkDropList
+               [cdkDropListData]="blackList"
+               class="example-list"
+               (cdkDropListDropped)="dropBlack($event)">
+            <div class="example-box" *ngFor="let fileName of blackList" cdkDrag>{{fileName}}</div>
+          </div>
+        </ng-template>
+      </div>
+    </cdk-virtual-scroll-viewport>
+  </div>
+
 
   <div class="input-holder">
     <div class="modal fade show" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none">
