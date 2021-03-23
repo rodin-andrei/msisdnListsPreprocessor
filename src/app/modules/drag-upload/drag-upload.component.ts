@@ -46,31 +46,20 @@ export  class DragUploadComponent {
       let name: string = fullName.substr(0, fullName.lastIndexOf("."))
       let extension = fullName.substr(fullName.lastIndexOf(".") + 1)
 
-
       if (filesMap.get(name) == undefined) {
-
-        let subscribers = await this.getSubscribers(f.originFileObj)
-
-        setTimeout(() => {
-
-          this.addFile(name, new File(name, subscribers), extension)
-        }, 0)
+        this.parser.parseXlsCsv(f.originFileObj, (result)=>{
+          let subscribers = result;
+          this.addFile(name, new File(name, subscribers), extension);
+        })
       }
     }
   }
 
-  async getSubscribers(file) {
-
-    return this.parser.parseXlsCsv(file)
-  }
-
-
-  addFile(name:string, file:File, extension:string) {
-    setTimeout(()=>{
-      file.setUnique(this.operations.getUniqueSubscribers(new Array(file)).length)
-      file.setSimilar(this.operations.getSimilarSubscribers(new Array(file)).length)
-    }, 0)
+  addFile(name:string, file:File, extension:string) {;
+    file.setUnique(this.operations.getUniqueSubscribers(new Array(file)).length)
+    file.setSimilar(this.operations.getSimilarSubscribers(new Array(file)).length)
     file.setExtension(extension)
     filesMap.set(name, file)
   }
+
 }

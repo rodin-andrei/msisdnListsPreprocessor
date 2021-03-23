@@ -11,9 +11,11 @@ export class OperationsService {
   getUniqueSubscribers(list: File[]) {
     let msisdnList = new Set<string>()
 
-    list.forEach(file => file.msisdnList.forEach(value =>
-      msisdnList.add(JSON.stringify(value))))
-
+    for (let i = 0; i < list.length; i++){
+      for (let j = 0; j < list[i].msisdnList.length; j++){
+        msisdnList.add(JSON.stringify(list[i].msisdnList[j]));
+      }
+    }
     return Array.from(msisdnList)
   }
 
