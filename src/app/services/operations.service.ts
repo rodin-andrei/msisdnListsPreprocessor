@@ -8,43 +8,29 @@ export class OperationsService {
 
   constructor() { }
 
-  getUniqueSubscribers(list: File[]) {
+  getUniqueSubscribers(files: File[]) {
     let msisdnList = new Set<string>()
 
-    list.forEach(file => file.msisdnList.forEach(value =>
-      msisdnList.add(JSON.stringify(value))))
+    files.forEach(file => file.msisdnList
+      .forEach(msisdn => msisdnList.add(JSON.stringify(msisdn))))
 
     return Array.from(msisdnList)
   }
 
-  getSimilarSubscribers(list:File[]) {
+  getSimilarSubscribers(files:File[]) {
     let checkList = new Set<string>()
     let result = new Set<string>()
-    let fullCheckList = []
 
-    list[0].msisdnList.forEach(v => {
-      let value = JSON.stringify(v)
-
-      if (checkList.has(value) && !result.has(value))
-        result.add(value)
-
-      if (!checkList.has(value))
-        checkList.add(value)
-    })
-
-      for (let i = 1 ; i < list.length; i++) {
-        list[i].msisdnList.forEach(v => {
-
+      for (let i = 0 ; i < files.length; i++) {
+        files[i].msisdnList.forEach(v => {
           let value = JSON.stringify(v)
 
           if (checkList.has(value) && !result.has(value)) {
             result.add(value)
-
-          } else {
-            fullCheckList.push(value)
+          } if (!checkList.has(value)) {
+            checkList.add(value)
           }
         })
-        fullCheckList.forEach(checkList.add, checkList)
       }
     return Array.from(result)
   }
