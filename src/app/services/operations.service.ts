@@ -17,6 +17,24 @@ export class OperationsService {
     return Array.from(msisdnList)
   }
 
+  getUniqueSubscribersB(files: File[], blackList: File[]) {
+    let msisdnList = new Set<string>()
+    let tempMsisdn = new Set<string>()
+    let blackMsisdn = new Set<string>()
+    files.forEach(file => file.msisdnList
+      .forEach(msisdn => tempMsisdn.add(JSON.stringify(msisdn))))
+    files.forEach(file => file.msisdnList
+      .forEach(msisdn => blackMsisdn.add(JSON.stringify(msisdn))))
+
+    for (let i = 0; i < tempMsisdn.size;i++){
+      if (!blackList.includes(tempMsisdn[i])){
+        msisdnList.add(tempMsisdn[i]);
+      }
+    }
+
+    return Array.from(msisdnList)
+  }
+
   // getSimilarSubscribers(files:File[]) {
   //   let checkList = new Set<string>()
   //   let result = new Set<string>()
