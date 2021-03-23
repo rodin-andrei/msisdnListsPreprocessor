@@ -23,12 +23,14 @@ export class OperationsService {
     let blackMsisdn = new Set<string>()
     files.forEach(file => file.msisdnList
       .forEach(msisdn => tempMsisdn.add(JSON.stringify(msisdn))))
-    files.forEach(file => file.msisdnList
+    blackList.forEach(file => file.msisdnList
       .forEach(msisdn => blackMsisdn.add(JSON.stringify(msisdn))))
-
+    console.log(tempMsisdn);
+    console.log(blackMsisdn);
     for (let i = 0; i < tempMsisdn.size;i++){
       if (!blackList.includes(tempMsisdn[i])){
         msisdnList.add(tempMsisdn[i]);
+        console.log(tempMsisdn[i]);
       }
     }
 
