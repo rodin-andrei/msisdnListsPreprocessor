@@ -17,22 +17,45 @@ export class OperationsService {
     return Array.from(msisdnList)
   }
 
+  // getSimilarSubscribers(files:File[]) {
+  //   let checkList = new Set<string>()
+  //   let result = new Set<string>()
+  //
+  //     for (let i = 0 ; i < files.length; i++) {
+  //       files[i].msisdnList.forEach(v => {
+  //         let value = JSON.stringify(v)
+  //
+  //         if (checkList.has(value) && !result.has(value)) {
+  //           result.add(value)
+  //         } if (!checkList.has(value)) {
+  //           checkList.add(value)
+  //         }
+  //       })
+  //     }
+  //   return Array.from(result)
+  // }
   getSimilarSubscribers(files:File[]) {
     let checkList = new Set<string>()
-    let result = new Set<string>()
+    let result = new Map<string, number>()
 
-      for (let i = 0 ; i < files.length; i++) {
-        files[i].msisdnList.forEach(v => {
-          let value = JSON.stringify(v)
+    for (let i = 0 ; i < files.length; i++) {
+      files[i].msisdnList.forEach(v => {
+        let value = JSON.stringify(v)
 
-          if (checkList.has(value) && !result.has(value)) {
-            result.add(value)
-          } if (!checkList.has(value)) {
-            checkList.add(value)
+        if (checkList.has(value)) {
+
+          if (result.get(value) === undefined) {
+            result.set(value, 1)
+          } else {
+            result.set(value,result.get(value) + 1)
           }
-        })
-      }
-    return Array.from(result)
+        } else {
+          checkList.add(value)
+        }
+      })
+    }
+    console.log(result)
+    return result
   }
 }
 /*

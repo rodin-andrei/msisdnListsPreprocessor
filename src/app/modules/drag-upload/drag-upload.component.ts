@@ -8,7 +8,7 @@ export class File {
   name:string
   msisdnList:string[]
   unique:string
-  similar:string
+  similar:Map<string,number>
   extension:string
 
   constructor(name, msisdnList) {
@@ -23,7 +23,6 @@ export class File {
   setSimilar(similar) {
     this.similar = similar
   }
-
   setExtension(extension) {
     this.extension = extension
   }
@@ -39,6 +38,7 @@ export  class DragUploadComponent {
 
   parser = new ParserService()
   operations = new OperationsService()
+  processedFiles = new Set<string>()
 
   handleChange({fileList}: NzUploadChangeParam) {
 
@@ -47,8 +47,8 @@ export  class DragUploadComponent {
       let name: string = fullName.substr(0, fullName.lastIndexOf("."))
       let extension = fullName.substr(fullName.lastIndexOf(".") + 1)
 
-      if (filesMap.get(name) == undefined) {
-
+      if (!this.processedFiles.has(name) || !filesMap.has(name)) {
+        this.processedFiles.add(name)
         this.parser.parseXlsCsv(f.originFileObj, (result) =>{
           this.addFile(name, new File(name, result), extension)
         })
@@ -58,7 +58,7 @@ export  class DragUploadComponent {
 
   addFile(name:string, file:File, extension:string) {
     file.setUnique(this.operations.getUniqueSubscribers(new Array(file)).length)
-    file.setSimilar(this.operations.getSimilarSubscribers(new Array(file)).length)
+    file.setSimilar(this.operations.getSimilarSubscribers(new Array(file)))
     file.setExtension(extension)
     filesMap.set(name, file)
   }

@@ -42,14 +42,14 @@ export class OperationsComponent {
     filesMap.set(this.resultName, file)
   }
 
-  getSimilarSubscribers() {
-    let files:File[] = []
-    this.operate.forEach(name => files.push(filesMap.get(name)))
-    let file:File = new File(this.resultName, this.operations.getSimilarSubscribers(files))
-
-    file.setExtension("similar.subscribers")
-    filesMap.set(this.resultName, file)
-  }
+  // getSimilarSubscribers() {
+  //   let files:File[] = []
+  //   this.operate.forEach(name => files.push(filesMap.get(name)))
+  //   let file:File = new File(this.resultName, this.operations.getSimilarSubscribers(files))
+  //
+  //   file.setExtension("similar.subscribers")
+  //   filesMap.set(this.resultName, file)
+  // }
 
   popMenuShow(){
     document.getElementById('exampleModal').style.display="block";
