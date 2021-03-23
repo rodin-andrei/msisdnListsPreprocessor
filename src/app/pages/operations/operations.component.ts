@@ -50,5 +50,11 @@ export class OperationsComponent {
     file.setExtension("similar.subscribers")
     filesMap.set(this.resultName, file)
   }
-}
 
+  popMenuShow(){
+    document.getElementById('exampleModal').style.display="block";
+  }
+  popMenuHide(){
+    document.getElementById('exampleModal').style.display="none";
+  }
+}

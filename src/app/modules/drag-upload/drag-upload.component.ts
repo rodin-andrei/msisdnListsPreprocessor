@@ -19,6 +19,7 @@ export class File {
   setUnique(unique) {
     this.unique = unique
   }
+
   setSimilar(similar) {
     this.similar = similar
   }
@@ -39,27 +40,26 @@ export  class DragUploadComponent {
   parser = new ParserService()
   operations = new OperationsService()
 
-  async handleChange({file, fileList}: NzUploadChangeParam) {
+  handleChange({fileList}: NzUploadChangeParam) {
 
-    for (const f of fileList) {
+    fileList.forEach( f => {
       let fullName = f.originFileObj.name
       let name: string = fullName.substr(0, fullName.lastIndexOf("."))
       let extension = fullName.substr(fullName.lastIndexOf(".") + 1)
 
       if (filesMap.get(name) == undefined) {
-        this.parser.parseXlsCsv(f.originFileObj, (result)=>{
-          let subscribers = result;
-          this.addFile(name, new File(name, subscribers), extension);
+
+        this.parser.parseXlsCsv(f.originFileObj, (result) =>{
+          this.addFile(name, new File(name, result), extension)
         })
       }
-    }
+    })
   }
 
-  addFile(name:string, file:File, extension:string) {;
+  addFile(name:string, file:File, extension:string) {
     file.setUnique(this.operations.getUniqueSubscribers(new Array(file)).length)
     file.setSimilar(this.operations.getSimilarSubscribers(new Array(file)).length)
     file.setExtension(extension)
     filesMap.set(name, file)
   }
-
 }

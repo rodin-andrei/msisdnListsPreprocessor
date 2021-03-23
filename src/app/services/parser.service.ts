@@ -10,7 +10,6 @@ export class ParserService {
   constructor() {
   }
 
-
   parseXlsCsv(file, callback) {
     let result: string[] = []
     let fileReader = new FileReader();
@@ -24,7 +23,6 @@ export class ParserService {
       var workbook = XLSX.read(bstr, {type: "binary"});
       var first_sheet_name = workbook.SheetNames[0];
       var worksheet = workbook.Sheets[first_sheet_name];
-
       XLSX.utils.sheet_to_json(worksheet, {raw: true}).forEach(s => result.push(s as string));
       callback(result);
     }
