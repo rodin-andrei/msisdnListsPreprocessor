@@ -53,8 +53,10 @@ export class OperationsComponent {
 
   popMenuShow(){
     document.getElementById('exampleModal').style.display="block";
+    document.getElementById("exampleModal").className="popup-fade modal fade show";
   }
   popMenuHide(){
     document.getElementById('exampleModal').style.display="none";
+    document.getElementById("exampleModal").className="modal fade show";
   }
 }
