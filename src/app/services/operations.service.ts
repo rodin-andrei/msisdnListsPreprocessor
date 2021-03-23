@@ -54,7 +54,6 @@ export class OperationsService {
         }
       })
     }
-    console.log(result)
     return result
   }
 }

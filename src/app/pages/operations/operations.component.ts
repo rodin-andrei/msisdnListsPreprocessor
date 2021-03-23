@@ -15,8 +15,8 @@ export class OperationsComponent {
   operate = []
   blackList = []
 
-  onInput(event: KeyboardEvent) {
-    this.resultName = (event.target as HTMLInputElement).value;
+  onInput() {
+    this.resultName = document.getElementsByClassName("form-group")[0].querySelector('input').value;
   }
 
   drop(event: CdkDragDrop<string[]>) {
@@ -30,25 +30,13 @@ export class OperationsComponent {
     }
   }
 
-  dropBlack(event: CdkDragDrop<string[]>) {
-    if (event.previousContainer === event.container) {
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    } else {
-      transferArrayItem(event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex);
-    }
-    alert(this.operate);
-    alert(this.blackList);
-  }
-
   getFileNames() {
     return Array.from(filesMap.keys())
   }
 
   getUniqueSubscribers() {
     let files:File[] = []
+    console.log(files);
     this.operate.forEach(name => files.push(filesMap.get(name)))
     let file:File = new File(this.resultName, this.operations.getUniqueSubscribers(files))
 
@@ -67,7 +55,15 @@ export class OperationsComponent {
 
   popMenuShow(){
     document.getElementById('exampleModal').style.display="block";
-    document.getElementById("exampleModal").className="popup-fade modal fade show";
+    document.getElementById('exampleModal').className="popup-fade modal fade show";
+    let valueInp = this.operate[0];
+    let valueBlack = this.blackList[0];
+    if (valueInp == undefined || valueBlack == undefined){
+      document.getElementsByClassName("form-group")[0].querySelector('input').value="temp.csv";
+    }else{
+      document.getElementsByClassName("form-group")[0].querySelector('input').value=valueInp +"_"+valueBlack+".csv";
+    }
+
   }
   popMenuHide(){
     document.getElementById('exampleModal').style.display="none";
