@@ -8,29 +8,14 @@ export class OperationsService {
 
   constructor() { }
 
-  getUniqueSubscribers(files: File[]) {
+  getUniqueSubscribers(files: File[], blackListFiles: File[]) {
     let msisdnList = new Set<string>()
 
     files.forEach(file => file.msisdnList
       .forEach(msisdn => msisdnList.add(JSON.stringify(msisdn))))
 
-    return Array.from(msisdnList)
-  }
-
-  getUniqueSubscribersB(files: File[], blackList: File[]) {
-    let msisdnList = new Set<string>()
-    let tempMsisdn = new Set<string>()
-    let blackMsisdn = new Set<string>()
-    files.forEach(file => file.msisdnList
-      .forEach(msisdn => tempMsisdn.add(JSON.stringify(msisdn))))
-    files.forEach(file => file.msisdnList
-      .forEach(msisdn => blackMsisdn.add(JSON.stringify(msisdn))))
-
-    for (let i = 0; i < tempMsisdn.size;i++){
-      if (!blackList.includes(tempMsisdn[i])){
-        msisdnList.add(tempMsisdn[i]);
-      }
-    }
+    blackListFiles.forEach(file => file.msisdnList
+      .forEach(msisdn => msisdnList.delete(JSON.stringify(msisdn))))
 
     return Array.from(msisdnList)
   }
@@ -75,7 +60,3 @@ export class OperationsService {
     return result
   }
 }
-/*
-black list:
-  if file --> result убирает все msidns которые в блэк листе
-*/

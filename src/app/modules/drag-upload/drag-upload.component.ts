@@ -57,7 +57,7 @@ export  class DragUploadComponent {
   }
 
   addFile(name:string, file:File, extension:string) {
-    file.setUnique(this.operations.getUniqueSubscribers(new Array(file)).length)
+    file.setUnique(this.operations.getUniqueSubscribers(new Array(file),[]).length)
     file.setSimilar(this.operations.getSimilarSubscribers(new Array(file)))
     file.setExtension(extension)
     filesMap.set(name, file)

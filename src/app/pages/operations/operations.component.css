@@ -1,5 +1,5 @@
 .cdk-main {
-  height: 90%;
+  height: 95%;
 }
 
 .example-container {
@@ -42,17 +42,19 @@
 }
 
 .uploaded-view-container {
+  padding-top: 30px;
   padding-left: 20px;
   display: inline-block;
   width: 25%;
-  height: 90%;
+  height: 95%;
 }
 
 .operate-view-container {
+  padding-top: 30px;
   padding-left: 10px;
   display: inline-block;
   width: 25%;
-  height: 90%;
+  height: 95%;
 }
 
 .uploaded-title {

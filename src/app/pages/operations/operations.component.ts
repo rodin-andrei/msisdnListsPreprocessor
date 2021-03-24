@@ -35,23 +35,18 @@ export class OperationsComponent {
   }
 
   getUniqueSubscribers() {
-    let files:File[] = []
-    let blackList:File[] = []
-    let file:File;
-    this.blackList.forEach(name => blackList.push(filesMap.get(name)))
-    this.operate.forEach(name => files.push(filesMap.get(name)))
+    if (this.operate.length > 0) {
+      let files: File[] = []
+      let blackList: File[] = []
 
-    if(blackList == []){
-      file = new File(this.resultName, this.operations.getUniqueSubscribers(files))
-      console.log("1");
-    }else{
-      file = new File(this.resultName, this.operations.getUniqueSubscribersB(files, blackList))
-      console.log("2");
+      this.blackList.forEach(name => blackList.push(filesMap.get(name)))
+      this.operate.forEach(name => files.push(filesMap.get(name)))
+
+      let file: File = new File(this.resultName, this.operations.getUniqueSubscribers(files, blackList))
+      file.setExtension("unique.subscribers")
+
+      filesMap.set(this.resultName, file)
     }
-
-    file.setExtension("unique.subscribers")
-    filesMap.set(this.resultName, file)
-    console.log(this.resultName, file);
   }
 
   // getSimilarSubscribers() {
@@ -66,15 +61,9 @@ export class OperationsComponent {
   popMenuShow(){
     document.getElementById('exampleModal').style.display="block";
     document.getElementById('exampleModal').className="popup-fade modal fade show";
-    let valueInp = this.operate[0];
-    let valueBlack = this.blackList[0];
-    if (valueInp == undefined || valueBlack == undefined){
-      document.getElementsByClassName("form-group")[0].querySelector('input').value="temp.csv";
-    }else{
-      document.getElementsByClassName("form-group")[0].querySelector('input').value=valueInp +"_"+valueBlack+".csv";
-    }
-
+    document.getElementsByClassName("form-group")[0].querySelector('input').value = "new_result";
   }
+
   popMenuHide(){
     document.getElementById('exampleModal').style.display="none";
     document.getElementById("exampleModal").className="modal fade show";
