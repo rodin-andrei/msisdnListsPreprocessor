@@ -8,28 +8,33 @@
     <div class="col-2 text-center"><h5></h5></div>
 
   </div><hr style="height: 2px; color: black; background-color: gray;">
-  <div class="col-12" style="" *ngFor="let file of getFileNames()" (click)="showInfo(files.get(file))">
-    <div class="row">
+  <div class="col-12"  *ngFor="let fileName of getFileNames()" >
+    <div class="row" style="cursor: pointer;" (click)="showInfo(files.get(fileName))">
       <div class="col-2 text-left" style="height: 18px; overflow: hidden;
       font-size: 12px; line-height: 16px;">
-        <h6>{{files.get(file).name}}</h6></div>
-      <div class="col-3 text-center">{{files.get(file).msisdnList.length}}</div>
-      <div class="col-2 text-center">{{files.get(file).unique}}</div>
-      <div class="col-2 text-center" *ngIf="files.get(file).similar !== undefined; else elseBlock">{{files.get(file).similar.size}}</div>
+        <h6>{{files.get(fileName).name}}</h6></div>
+      <div class="col-3 text-center">{{files.get(fileName).msisdnList.length}}</div>
+      <div class="col-2 text-center">{{files.get(fileName).unique}}</div>
+      <div class="col-2 text-center" *ngIf="files.get(fileName).similar !== undefined; else elseBlock">{{files.get(fileName).similar.size}}</div>
       <ng-template #elseBlock>
         <div class="col-2 text-center">{{""}}</div>
       </ng-template>
-      <div class="col-1 text-center">{{files.get(file).extension}}</div>
-      <div class="col-2 text-center" (click)="download(files.get(file))">
+      <div class="col-1 text-center">{{files.get(fileName).extension}}</div>
+      <div class="col-2 text-center" (click)="download(files.get(fileName))">
         <button style="border: none; background-color: white"><i nz-icon nzType="download"></i></button>
       </div>
       <div class="col-12"><hr></div>
-    </div>
-    <div class="row" style="display: none;" id="{{files.get(file).name}}InfoBar">
-      <div class="col-12">
-        qwesadasd
+      <div class="col-12" style="display: none;" id="{{files.get(fileName).name}}InfoBar">
+          <div class="row" *ngIf="files.get(fileName).similar !== undefined; else elseBlockSimilar">
+              <div class="col-12" *ngFor="let fileSimilar of files.get(fileName).similar.keys()">{{fileSimilar}}:{{files.get(fileName).similar.get(fileSimilar)}}
+
+              </div>
+          </div>
+          <ng-template #elseBlockSimilar>
+            <div class="col-6">{{""}}</div>
+          </ng-template>
+        <div class="col-12"><hr></div>
       </div>
-      <div class="col-12"><hr></div>
     </div>
   </div>
 </cdk-virtual-scroll-viewport>

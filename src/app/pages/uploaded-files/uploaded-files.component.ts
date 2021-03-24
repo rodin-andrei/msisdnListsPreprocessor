@@ -47,8 +47,17 @@ export class UploadedFilesComponent {
     if (document.getElementById(file.name + "InfoBar").style.display==="block"){
       document.getElementById(file.name + "InfoBar").style.display="none";
     }else {
-      let hideBar = document.getElementById(file.name + "InfoBar").style.display="block";
-
+      document.getElementById(file.name + "InfoBar").style.display="block";
     }
+  }
+
+  getSimilar(file){
+    console.log(file);
+    let tempArrKey = file.similar.keys().next().value;
+    console.log(tempArrKey);
+    let tempArrValue = file.similar.values().next().value;
+    console.log(tempArrValue);
+    let tempArr:string = tempArrKey.toString() + " " + tempArrValue.toString() + ";"
+    return tempArr;
   }
 }

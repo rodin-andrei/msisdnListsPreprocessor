@@ -30,8 +30,8 @@ export class OperationsService {
 
         if (checkList.has(value)) {
 
-          if (result.get(value) === undefined) {
-            result.set(value, 1)
+          if (!result.has(value)) {
+            result.set(value, 2)
           } else {
             result.set(value,result.get(value) + 1)
           }
