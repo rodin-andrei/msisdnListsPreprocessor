@@ -13,10 +13,10 @@ export class OperationsService {
     let msisdnList = new Set<string>()
 
     files.forEach(file => file.msisdnList
-      .forEach(msisdn => msisdnList.add(JSON.stringify(msisdn))))
+      .forEach(msisdn => msisdnList.add(msisdn)))
 
     blackListFiles.forEach(file => file.msisdnList
-      .forEach(msisdn => msisdnList.delete(JSON.stringify(msisdn))))
+      .forEach(msisdn => msisdnList.delete(msisdn)))
 
     return Array.from(msisdnList)
   }
@@ -26,8 +26,7 @@ export class OperationsService {
     let result = new Map<string, number>()
 
     for (let i = 0 ; i < files.length; i++) {
-      files[i].msisdnList.forEach(v => {
-        let value = JSON.stringify(v)
+      files[i].msisdnList.forEach(value => {
 
         if (checkList.has(value)) {
 

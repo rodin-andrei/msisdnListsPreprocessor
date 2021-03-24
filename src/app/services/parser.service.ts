@@ -23,7 +23,11 @@ export class ParserService {
       var workbook = XLSX.read(bstr, {type: "binary"});
       var first_sheet_name = workbook.SheetNames[0];
       var worksheet = workbook.Sheets[first_sheet_name];
-      XLSX.utils.sheet_to_json(worksheet, {raw: true}).forEach(s => result.push(s as string));
+      XLSX.utils.sheet_to_json(worksheet, {raw: true}).forEach(s => {
+        let str = JSON.stringify(s)
+        str = str.substring(str.indexOf(":") + 1, str.length-1)
+        result.push(str)
+      })
       callback(result);
     }
   }

@@ -27,14 +27,14 @@ export class UploadedFilesComponent {
     console.log(filesMap.get(file).msisdnList)
   }
 
-  donwload(file){
+  download(file){
     let fileArr = file.msisdnList;
     let fileStringArr = [];
 
-    fileStringArr.push(fileArr[0].msisdn.toString());
+    fileStringArr.push(fileArr[0].toString());
 
     for (let i = 1; i < fileArr.length; i++) {
-      fileStringArr.push("\n" + fileArr[i].msisdn.toString());
+      fileStringArr.push("\n" + fileArr[i].toString());
     }
     var csv = fileStringArr.toString();
     var hiddenElement = document.createElement('a');
@@ -43,4 +43,6 @@ export class UploadedFilesComponent {
     hiddenElement.download = file.name + '.csv';
     hiddenElement.click();
   }
+
+
 }
