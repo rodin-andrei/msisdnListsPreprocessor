@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
-import {NzUploadChangeParam } from 'ng-zorro-antd/upload';
-import { ParserService} from "../../services/parser.service";
+import {NzUploadChangeParam} from 'ng-zorro-antd/upload';
+import {ParserService} from "../../services/parser.service";
 import {OperationsService} from "../../services/operations.service";
 
 export let filesMap = new Map<string, File>()
@@ -57,8 +57,14 @@ export  class DragUploadComponent {
   }
 
   addFile(name:string, file:File, extension:string) {
-    file.setUnique(this.operations.getUniqueSubscribers(new Array(file),[]).length)
-    file.setSimilar(this.operations.getSimilarSubscribers(new Array(file)))
+    let map = this.operations.getSimilarUniqueSubscribers(new Array(file),[])
+    file.setUnique(map.size)
+    file.setSimilar(new Map())
+    for (let [key, value] of map) {
+      if (value!==1){
+        file.similar.set(key, value);
+      }
+    }
     file.setExtension(extension)
     filesMap.set(name, file)
   }

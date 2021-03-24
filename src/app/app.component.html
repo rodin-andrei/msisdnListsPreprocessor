@@ -6,27 +6,25 @@
     <div class="sidebar-logo">
       <a href="">
         <img src="https://ng.ant.design/assets/img/logo.svg" alt="logo">
-        <h1>XLS Parse App</h1>
+        <h1>XlsCsv Parse App</h1>
       </a>
     </div>
+
     <ul nz-menu nzTheme="dark" nzMode="inline">
       <li nz-submenu nzOpen nzTitle="Menu" nzIcon="dashboard">
         <ul>
           <li nz-menu-item>
-<!--              routerLinkActive="active">-->
             <a (click)="routingLink = 'upload' ">Uploaded Files</a>
-                  <!--routerLink="upload"-->
-
           </li>
           <li nz-menu-item>
-<!--             routerLinkActive="active">-->
             <a (click)="routingLink = 'operations'">Operations</a>
-<!--              routerLink="operations" -->
           </li>
         </ul>
       </li>
     </ul>
+
   </nz-sider>
+
   <nz-layout>
     <nz-header class="nz-header">
       <div class="app-header">

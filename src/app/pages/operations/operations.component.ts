@@ -42,7 +42,7 @@ export class OperationsComponent {
       this.blackList.forEach(name => blackList.push(filesMap.get(name)))
       this.operate.forEach(name => files.push(filesMap.get(name)))
 
-      let file: File = new File(this.resultName, this.operations.getUniqueSubscribers(files, blackList))
+      let file: File = new File(this.resultName, this.operations.getSimilarUniqueSubscribers(files, blackList))
       file.setExtension("unique")
 
       filesMap.set(this.resultName, file)
