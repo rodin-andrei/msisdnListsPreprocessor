@@ -10,24 +10,25 @@ export class ParserService {
   constructor() {
   }
 
-  parseXlsCsv(file, callback) {
+  parseXlsCsv(uploadedFile, callback) {
     let result: string[] = []
     let fileReader = new FileReader();
-    fileReader.readAsArrayBuffer(file);
+    fileReader.readAsArrayBuffer(uploadedFile);
     fileReader.onload = () => {
       let arrayBuffer: any = fileReader.result;
-      var data = new Uint8Array(arrayBuffer);
-      var arr = [];
-      for (var i = 0; i != data.length; ++i) arr[i] = String.fromCharCode(data[i]);
-      var bstr = arr.join("");
-      var workbook = XLSX.read(bstr, {type: "binary"});
-      var first_sheet_name = workbook.SheetNames[0];
-      var worksheet = workbook.Sheets[first_sheet_name];
+      let data = new Uint8Array(arrayBuffer);
+      let arr = [];
+      for (let i = 0; i != data.length; ++i) arr[i] = String.fromCharCode(data[i]);
+      let bstr = arr.join("");
+      let workbook = XLSX.read(bstr, {type: "binary"});
+      let first_sheet_name = workbook.SheetNames[0];
+      let worksheet = workbook.Sheets[first_sheet_name];
       XLSX.utils.sheet_to_json(worksheet, {raw: true}).forEach(s => {
         let str = JSON.stringify(s)
         str = str.substring(str.indexOf(":") + 1, str.length-1)
         result.push(str)
       })
+      console.log(uploadedFile);
       callback(result);
     }
   }

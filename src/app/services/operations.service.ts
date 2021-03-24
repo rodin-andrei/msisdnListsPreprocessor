@@ -9,18 +9,19 @@ export class OperationsService {
 
   constructor() { }
 
-  getSimilarUniqueSubscribers(files:File[], blackListFiles: File[]) {
+  mapSubscribersQtySimilar(files:File[], blackListFiles: File[]) {
     let result = new Map<string, number>()
 
     files.forEach(file =>{
-      file.msisdnList.forEach(value => {
-        if(!result.has(value)){
-          result.set(value, 1)
+      file.msisdnList.forEach(msisdn => {
+        if(!result.has(msisdn)){
+          result.set(msisdn, 1)
         }else{
-          result.set(value, result.get(value)+1)
+          result.set(msisdn, result.get(msisdn)+1)
         }
       })
     })
+
     blackListFiles.forEach(file => file.msisdnList
       .forEach(msisdn => result.delete(msisdn)))
 

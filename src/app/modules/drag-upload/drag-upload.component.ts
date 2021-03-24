@@ -42,25 +42,24 @@ export  class DragUploadComponent {
 
   handleChange({fileList}: NzUploadChangeParam) {
 
-    fileList.forEach( f => {
-      let fullName = f.originFileObj.name
-      let name: string = fullName.substr(0, fullName.lastIndexOf("."))
-      let extension = fullName.substr(fullName.lastIndexOf(".") + 1)
+    fileList.forEach( uploadedFile => {
+      let fileName: string = uploadedFile.originFileObj.name.substr(0, uploadedFile.originFileObj.name.lastIndexOf("."))
+      let extension = uploadedFile.originFileObj.name.substr(uploadedFile.originFileObj.name.lastIndexOf(".") + 1)
 
-      if (!this.processedFiles.has(name) || !filesMap.has(name)) {
-        this.processedFiles.add(name)
-        this.parser.parseXlsCsv(f.originFileObj, (result) =>{
-          this.addFile(name, new File(name, result), extension)
+      if (!this.processedFiles.has(fileName) || !filesMap.has(fileName)) {
+        this.processedFiles.add(fileName)
+        this.parser.parseXlsCsv(uploadedFile.originFileObj, (result) =>{
+          this.addFile(fileName, new File(fileName, result), extension)
         })
       }
     })
   }
 
   addFile(name:string, file:File, extension:string) {
-    let map = this.operations.getSimilarUniqueSubscribers(new Array(file),[])
-    file.setUnique(map.size)
+    let mapSubscribers = this.operations.mapSubscribersQtySimilar(new Array(file),[])
+    file.setUnique(mapSubscribers.size)
     file.setSimilar(new Map())
-    for (let [key, value] of map) {
+    for (let [key, value] of mapSubscribers) {
       if (value!==1){
         file.similar.set(key, value);
       }
