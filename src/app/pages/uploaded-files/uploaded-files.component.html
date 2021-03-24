@@ -8,7 +8,7 @@
     <div class="col-2 text-center"><h5></h5></div>
 
   </div><hr style="height: 2px; color: black; background-color: gray;">
-  <div class="col-12" style="height: 50px" *ngFor="let file of getFileNames()">
+  <div class="col-12" style="" *ngFor="let file of getFileNames()" (click)="showInfo(files.get(file))">
     <div class="row">
       <div class="col-2 text-left" style="height: 18px; overflow: hidden;
       font-size: 12px; line-height: 16px;">
@@ -23,7 +23,13 @@
       <div class="col-2 text-center" (click)="download(files.get(file))">
         <button style="border: none; background-color: white"><i nz-icon nzType="download"></i></button>
       </div>
+      <div class="col-12"><hr></div>
     </div>
-    <hr>
+    <div class="row" style="display: none;" id="{{files.get(file).name}}InfoBar">
+      <div class="col-12">
+        qwesadasd
+      </div>
+      <div class="col-12"><hr></div>
+    </div>
   </div>
 </cdk-virtual-scroll-viewport>

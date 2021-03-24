@@ -10,7 +10,6 @@ export class UploadedFilesComponent {
 
 
   files = filesMap
-
   getFileNames() {
     return Array.from(filesMap.keys())
   }
@@ -44,5 +43,12 @@ export class UploadedFilesComponent {
     hiddenElement.click();
   }
 
+  showInfo(file){
+    if (document.getElementById(file.name + "InfoBar").style.display==="block"){
+      document.getElementById(file.name + "InfoBar").style.display="none";
+    }else {
+      let hideBar = document.getElementById(file.name + "InfoBar").style.display="block";
 
+    }
+  }
 }
