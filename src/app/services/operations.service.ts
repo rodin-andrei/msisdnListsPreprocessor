@@ -4,6 +4,7 @@ import {File} from "../modules/drag-upload/drag-upload.component";
 @Injectable({
   providedIn: 'root'
 })
+
 export class OperationsService {
 
   constructor() { }
@@ -20,23 +21,6 @@ export class OperationsService {
     return Array.from(msisdnList)
   }
 
-  // getSimilarSubscribers(files:File[]) {
-  //   let checkList = new Set<string>()
-  //   let result = new Set<string>()
-  //
-  //     for (let i = 0 ; i < files.length; i++) {
-  //       files[i].msisdnList.forEach(v => {
-  //         let value = JSON.stringify(v)
-  //
-  //         if (checkList.has(value) && !result.has(value)) {
-  //           result.add(value)
-  //         } if (!checkList.has(value)) {
-  //           checkList.add(value)
-  //         }
-  //       })
-  //     }
-  //   return Array.from(result)
-  // }
   getSimilarSubscribers(files:File[]) {
     let checkList = new Set<string>()
     let result = new Map<string, number>()
