@@ -43,7 +43,7 @@ export class OperationsComponent {
       this.operate.forEach(name => files.push(filesMap.get(name)))
 
       let file: File = new File(this.resultName, this.operations.getUniqueSubscribers(files, blackList))
-      file.setExtension("unique.subscribers")
+      file.setExtension("unique")
 
       filesMap.set(this.resultName, file)
     }

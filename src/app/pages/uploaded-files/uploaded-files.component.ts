@@ -26,4 +26,21 @@ export class UploadedFilesComponent {
   showFile(file) {
     console.log(filesMap.get(file).msisdnList)
   }
+
+  donwload(file){
+    let fileArr = file.msisdnList;
+    let fileStringArr = [];
+
+    fileStringArr.push(fileArr[0].msisdn.toString());
+
+    for (let i = 1; i < fileArr.length; i++) {
+      fileStringArr.push("\n" + fileArr[i].msisdn.toString());
+    }
+    var csv = fileStringArr.toString();
+    var hiddenElement = document.createElement('a');
+    hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
+    hiddenElement.target = '_blank';
+    hiddenElement.download = file.name + '.csv';
+    hiddenElement.click();
+  }
 }

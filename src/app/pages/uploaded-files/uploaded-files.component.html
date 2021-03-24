@@ -1,15 +1,16 @@
 <cdk-virtual-scroll-viewport class="view-port" itemSize="16" style="background-color: white">
   <div class="row" style="padding-top: 15px">
-    <div class="col-3 text-center"><h5>Name</h5></div>
+    <div class="col-2 text-center"><h5>Name</h5></div>
     <div class="col-3 text-center"><h5>Number of records</h5></div>
     <div class="col-2 text-center"><h5>Unique</h5></div>
     <div class="col-2 text-center"><h5>Similar</h5></div>
-    <div class="col-2 text-center"><h5>Extension</h5></div>
+    <div class="col-1 text-center"><h5>Extension</h5></div>
+    <div class="col-2 text-center"><h5></h5></div>
 
   </div><hr style="height: 2px; color: black; background-color: gray;">
   <div class="col-12" style="height: 50px" *ngFor="let file of getFileNames()">
     <div class="row">
-      <div class="col-3 text-left" style="height: 18px; overflow: hidden;
+      <div class="col-2 text-left" style="height: 18px; overflow: hidden;
       font-size: 12px; line-height: 16px;">
         <h6>{{files.get(file).name}}</h6></div>
       <div class="col-3 text-center">{{files.get(file).msisdnList.length}}</div>
@@ -18,7 +19,10 @@
       <ng-template #elseBlock>
         <div class="col-2 text-center">{{""}}</div>
       </ng-template>
-      <div class="col-2 text-center">{{files.get(file).extension}}</div>
+      <div class="col-1 text-center">{{files.get(file).extension}}</div>
+      <div class="col-2 text-center" (click)="donwload(files.get(file))">
+        <button style="border: none; background-color: white"><i nz-icon nzType="download"></i></button>
+      </div>
     </div>
     <hr>
   </div>

@@ -7,6 +7,8 @@ import { NzGridModule } from "ng-zorro-antd/grid";
 import { NzCardModule } from "ng-zorro-antd/card";
 import { CommonModule } from "@angular/common";
 import {DragDropModule} from '@angular/cdk/drag-drop';
+import {NzButtonModule} from "ng-zorro-antd/button";
+import {NzIconModule} from "ng-zorro-antd/icon";
 
 
 @NgModule({
@@ -17,7 +19,9 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
     NzGridModule,
     NzCardModule,
     CommonModule,
-    DragDropModule
+    DragDropModule,
+    NzButtonModule,
+    NzIconModule
 
   ],
   declarations: [
