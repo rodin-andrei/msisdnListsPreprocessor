@@ -24,7 +24,7 @@
           <div class="col-1 text-center">{{mapFilesMsisdn.get(fileName).extension}}</div>
         </div>
       </div>
-      <div class="col-2 text-center" (click)="download(mapFilesMsisdn.get(fileName))">
+      <div class="col-2 text-center" (click)="DownloadService.download(mapFilesMsisdn.get(fileName).msisdnList, fileName)">
         <button style="border: none; background-color: white"><i nz-icon nzType="download"></i></button>
       </div>
       <div class="col-12"><hr></div>

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { mapFilesMsisdn } from '../../shared/models/mapfilesmsisdn.model';
+import {DownloadService} from "../../services/download.service";
 
 @Component({
   selector: 'app-upload',
@@ -9,26 +10,10 @@ import { mapFilesMsisdn } from '../../shared/models/mapfilesmsisdn.model';
 export class UploadedFilesComponent {
   //for access in this component.html
   mapFilesMsisdn = mapFilesMsisdn
+  DownloadService = DownloadService;
 
   getFileNames() {
     return Array.from(mapFilesMsisdn.keys())
-  }
-
-  download(fileMsisdn){
-    let listMsisdn = fileMsisdn.msisdnList;
-    let StringMsisdn = [];
-
-    StringMsisdn.push(listMsisdn[0].toString());
-
-    for (let i = 1; i < listMsisdn.length; i++) {
-      StringMsisdn.push("\n" + listMsisdn[i].toString());
-    }
-    let csv = StringMsisdn.toString();
-    let hiddenElement = document.createElement('a');
-    hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
-    hiddenElement.target = '_blank';
-    hiddenElement.download = fileMsisdn.name + '.csv';
-    hiddenElement.click();
   }
 
   showInfo(mapFilesMsisdn){
