@@ -10,7 +10,7 @@ export class ParserService {
   constructor() {
   }
 
-  parseXlsCsv(uploadedFile, callback) {
+  static parseXlsCsv(uploadedFile, callback) {
     let result: string[] = []
     let fileReader = new FileReader();
     fileReader.readAsArrayBuffer(uploadedFile);

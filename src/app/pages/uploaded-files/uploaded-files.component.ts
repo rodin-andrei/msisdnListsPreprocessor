@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { filesMap} from "../../modules/drag-upload/drag-upload.component";
+import { mapFilesMsisdn } from '../../shared/models/mapfilesmsisdn.model';
 
 @Component({
   selector: 'app-upload',
@@ -7,57 +7,35 @@ import { filesMap} from "../../modules/drag-upload/drag-upload.component";
   styleUrls: ['./uploaded-files.component.css']
 })
 export class UploadedFilesComponent {
+  //for access in this component.html
+  mapFilesMsisdn = mapFilesMsisdn
 
-
-  files = filesMap
   getFileNames() {
-    return Array.from(filesMap.keys())
+    return Array.from(mapFilesMsisdn.keys())
   }
 
-  getFile(fileName) {
-    return filesMap.get(fileName)
-  }
+  download(fileMsisdn){
+    let listMsisdn = fileMsisdn.msisdnList;
+    let StringMsisdn = [];
 
-  getFiles() {
-    return filesMap.values()
-  }
+    StringMsisdn.push(listMsisdn[0].toString());
 
-  showFile(file) {
-    console.log(filesMap.get(file).msisdnList)
-  }
-
-  download(file){
-    let fileArr = file.msisdnList;
-    let fileStringArr = [];
-
-    fileStringArr.push(fileArr[0].toString());
-
-    for (let i = 1; i < fileArr.length; i++) {
-      fileStringArr.push("\n" + fileArr[i].toString());
+    for (let i = 1; i < listMsisdn.length; i++) {
+      StringMsisdn.push("\n" + listMsisdn[i].toString());
     }
-    var csv = fileStringArr.toString();
-    var hiddenElement = document.createElement('a');
+    let csv = StringMsisdn.toString();
+    let hiddenElement = document.createElement('a');
     hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
     hiddenElement.target = '_blank';
-    hiddenElement.download = file.name + '.csv';
+    hiddenElement.download = fileMsisdn.name + '.csv';
     hiddenElement.click();
   }
 
-  showInfo(file){
-    if (document.getElementById(file.name + "InfoBar").style.display==="block"){
-      document.getElementById(file.name + "InfoBar").style.display="none";
+  showInfo(mapFilesMsisdn){
+    if (document.getElementById(mapFilesMsisdn.name + "InfoBar").style.display==="block"){
+      document.getElementById(mapFilesMsisdn.name + "InfoBar").style.display="none";
     }else {
-      document.getElementById(file.name + "InfoBar").style.display="block";
+      document.getElementById(mapFilesMsisdn.name + "InfoBar").style.display="block";
     }
-  }
-
-  getSimilar(file){
-    console.log(file);
-    let tempArrKey = file.similar.keys().next().value;
-    console.log(tempArrKey);
-    let tempArrValue = file.similar.values().next().value;
-    console.log(tempArrValue);
-    let tempArr:string = tempArrKey.toString() + " " + tempArrValue.toString() + ";"
-    return tempArr;
   }
 }

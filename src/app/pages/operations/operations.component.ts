@@ -1,7 +1,8 @@
 import {Component} from '@angular/core';
 import { CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
-import { filesMap, File } from "../../modules/drag-upload/drag-upload.component";
-import {OperationsService} from "../../services/operations.service";
+import { mapFilesMsisdn } from '../../shared/models/mapfilesmsisdn.model';
+import {OperationsService} from '../../services/operations.service';
+import {FileMsisdn} from '../../shared/models/filemsisdn.model';
 
 @Component({
   selector: 'app-operations',
@@ -10,13 +11,12 @@ import {OperationsService} from "../../services/operations.service";
 })
 export class OperationsComponent {
 
-  operations = new OperationsService()
   resultName?:string;
   operate = []
   blackList = []
 
   onInput() {
-    this.resultName = document.getElementsByClassName("form-group")[0].querySelector('input').value;
+    this.resultName = document.getElementsByClassName('form-group')[0].querySelector('input').value;
   }
 
   drop(event: CdkDragDrop<string[]>) {
@@ -30,22 +30,22 @@ export class OperationsComponent {
     }
   }
 
-  getFileNames() {
-    return Array.from(filesMap.keys())
+  getFilesMsisdnName() {
+    return Array.from(mapFilesMsisdn.keys())
   }
 
-  getUniqueSubscribers() {
+  pushOperateSubscribers() {
     if (this.operate.length > 0) {
-      let files: File[] = []
-      let blackList: File[] = []
+      let arrFileMsisdn: FileMsisdn[] = []
+      let arrBlackListFileMsisdn: FileMsisdn[] = []
 
-      this.blackList.forEach(name => blackList.push(filesMap.get(name)))
-      this.operate.forEach(name => files.push(filesMap.get(name)))
+      this.blackList.forEach(name => arrFileMsisdn.push(mapFilesMsisdn.get(name)))
+      this.operate.forEach(name => arrBlackListFileMsisdn.push(mapFilesMsisdn.get(name)))
 
-      let file: File = new File(this.resultName, this.operations.mapSubscribersQtySimilar(files, blackList))
-      file.setExtension("unique")
+      let operateFile: FileMsisdn = new FileMsisdn(this.resultName, OperationsService.mapSubscribersQtySimilar(arrFileMsisdn, arrBlackListFileMsisdn))
+      operateFile.extension = "unique"
 
-      filesMap.set(this.resultName, file)
+      mapFilesMsisdn.set(this.resultName, operateFile)
     }
   }
 

@@ -6,16 +6,16 @@
         <div    cdkDropList
         [cdkDropListData]="operate"
         class="example-list"
-        (cdkDropListDropped)="drop($event)" *ngIf="getFileNames().length === 0; else elseBlock" >
+        (cdkDropListDropped)="drop($event)" *ngIf="getFilesMsisdnName().length === 0; else elseBlock" >
         <div class="example-box" cdkDrag>{{"Uploaded Files"}}</div>
       </div>
         <ng-template #elseBlock class="else-block">
           <div    cdkDropList
-                  [cdkDropListData]="getFileNames()"
+                  [cdkDropListData]="getFilesMsisdnName()"
                   class="example-list"
                   cdkDropListSortingDisabled
                   (cdkDropListDropped)="drop($event)">
-                  <div class="example-box" *ngFor="let fileName of getFileNames()" cdkDrag>{{fileName}}</div>
+                  <div class="example-box" *ngFor="let fileName of getFilesMsisdnName()" cdkDrag>{{fileName}}</div>
           </div>
         </ng-template>
       </div>
@@ -81,7 +81,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" (click)="popMenuHide()">Close</button>
-          <button type="submit" class="btn btn-primary" (click)="onInput(); getUniqueSubscribers(); popMenuHide()">Get</button>
+          <button type="submit" class="btn btn-primary" (click)="onInput(); pushOperateSubscribers(); popMenuHide()">Get</button>
         </div>
       </div>
     </div>

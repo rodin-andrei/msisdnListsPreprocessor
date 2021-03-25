@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {File} from "../modules/drag-upload/drag-upload.component";
+import {FileMsisdn} from '../shared/models/filemsisdn.model';
 
 @Injectable({
   providedIn: 'root'
@@ -9,10 +9,10 @@ export class OperationsService {
 
   constructor() { }
 
-  mapSubscribersQtySimilar(files:File[], blackListFiles: File[]) {
+  static mapSubscribersQtySimilar(arrayFileMsisdn:FileMsisdn[], arrBlackListFileMsisdn: FileMsisdn[]) {
     let result = new Map<string, number>()
 
-    files.forEach(file =>{
+    arrayFileMsisdn.forEach(file =>{
       file.msisdnList.forEach(msisdn => {
         if(!result.has(msisdn)){
           result.set(msisdn, 1)
@@ -22,8 +22,7 @@ export class OperationsService {
       })
     })
 
-    blackListFiles.forEach(file => file.msisdnList
-      .forEach(msisdn => result.delete(msisdn)))
+    arrBlackListFileMsisdn.forEach(file => file.msisdnList.forEach(msisdn => result.delete(msisdn)))
 
     return result
   }
