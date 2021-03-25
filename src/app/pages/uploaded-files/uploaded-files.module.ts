@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { UploadRoutingModule } from './upload-routing.module';
+// import { UploadRoutingModule } from './upload-routing.module';
 import { UploadedFilesComponent } from "./uploaded-files.component";
 import { ScrollingModule } from "@angular/cdk/scrolling";
 import { NzListModule } from "ng-zorro-antd/list";
@@ -13,7 +13,7 @@ import {NzIconModule} from "ng-zorro-antd/icon";
 
 @NgModule({
   imports: [
-    UploadRoutingModule,
+    // UploadRoutingModule,
     ScrollingModule,
     NzListModule,
     NzGridModule,

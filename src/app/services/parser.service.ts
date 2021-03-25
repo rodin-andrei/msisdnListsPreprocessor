@@ -28,7 +28,6 @@ export class ParserService {
         str = str.substring(str.indexOf(":") + 1, str.length-1)
         result.push(str)
       })
-      console.log(uploadedFile);
       callback(result);
     }
   }

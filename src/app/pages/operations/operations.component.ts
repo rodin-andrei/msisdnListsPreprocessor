@@ -30,22 +30,28 @@ export class OperationsComponent {
     }
   }
 
-  getFilesMsisdnName() {
+  getFilesMsisdnNames() {
     return Array.from(mapFilesMsisdn.keys())
   }
 
-  pushOperateSubscribers() {
+  getOperatedArray() {
     if (this.operate.length > 0) {
       let arrFileMsisdn: FileMsisdn[] = []
       let arrBlackListFileMsisdn: FileMsisdn[] = []
+      console.log(this.operate)
 
-      this.blackList.forEach(name => arrFileMsisdn.push(mapFilesMsisdn.get(name)))
-      this.operate.forEach(name => arrBlackListFileMsisdn.push(mapFilesMsisdn.get(name)))
+      this.operate.forEach(name =>
+        arrFileMsisdn.push(
+          // console.log(
+            mapFilesMsisdn.get(name)))
 
-      let operateFile: FileMsisdn = new FileMsisdn(this.resultName, OperationsService.mapSubscribersQtySimilar(arrFileMsisdn, arrBlackListFileMsisdn))
-      operateFile.extension = "unique"
+      this.blackList.forEach(name => arrBlackListFileMsisdn.push(mapFilesMsisdn.get(name)))
 
-      mapFilesMsisdn.set(this.resultName, operateFile)
+      let operatedFile: FileMsisdn = new FileMsisdn(this.resultName, Array.from(OperationsService.getUniqueSimilarMap(arrFileMsisdn, arrBlackListFileMsisdn).keys()))
+
+      operatedFile.extension = "unique"
+
+      mapFilesMsisdn.set(this.resultName, operatedFile)
     }
   }
 

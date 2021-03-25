@@ -31,7 +31,7 @@ export  class DragUploadComponent {
   }
 
   addFile(uploadedFileName:string, FileMsisdn:FileMsisdn, uploadedFileExtension:string) {
-    let mapSubscribers = OperationsService.mapSubscribersQtySimilar(new Array(FileMsisdn),[])
+    let mapSubscribers = OperationsService.getUniqueSimilarMap(new Array(FileMsisdn),[])
     FileMsisdn.unique=mapSubscribers.size.toString();
     FileMsisdn.similar=(new Map())
     for (let [key, value] of mapSubscribers) {

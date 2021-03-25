@@ -9,7 +9,7 @@ export class OperationsService {
 
   constructor() { }
 
-  static mapSubscribersQtySimilar(arrayFileMsisdn:FileMsisdn[], arrBlackListFileMsisdn: FileMsisdn[]) {
+  static getUniqueSimilarMap(arrayFileMsisdn:FileMsisdn[], arrBlackListFileMsisdn: FileMsisdn[]) {
     let result = new Map<string, number>()
 
     arrayFileMsisdn.forEach(file =>{

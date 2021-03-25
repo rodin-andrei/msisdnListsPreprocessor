@@ -10,7 +10,7 @@ import { NzMenuModule } from "ng-zorro-antd/menu";
 import { NzIconModule } from "ng-zorro-antd/icon";
 import { NzLayoutModule } from "ng-zorro-antd/layout";
 import { UploadedFilesModule } from "./pages/uploaded-files/uploaded-files.module";
-import { AppRoutingModule } from "./app-routing.module";
+// import { AppRoutingModule } from "./app-routing.module";
 import { NzListModule } from "ng-zorro-antd/list";
 import { DragUploadModule } from "./modules/drag-upload/drag-upload.module";
 import {ScrollingModule} from "@angular/cdk/scrolling";
@@ -20,11 +20,7 @@ import {DragDropModule} from "@angular/cdk/drag-drop";
 import {OperationsModule} from "./pages/operations/operations.module";
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
-
-
-
 registerLocaleData(en);
-
 
 @NgModule({
 
@@ -42,7 +38,7 @@ registerLocaleData(en);
     NzIconModule,
     NzMenuModule,
     UploadedFilesModule,
-    AppRoutingModule,
+    // AppRoutingModule,
     NzListModule,
     ReactiveFormsModule,
     DragDropModule,
