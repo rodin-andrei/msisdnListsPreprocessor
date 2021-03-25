@@ -1,13 +1,13 @@
 export class FileMsisdn{
   private _name:string
-  private _msisdnList:string[]
+  private _msisdnArr:string[]
   private _unique:string
   private _similar:Map<string,number>
   private _extension:string
 
   constructor(name, msisdnList) {
     this._name = name;
-    this._msisdnList = msisdnList;
+    this._msisdnArr = msisdnList;
   }
 
   get name(): string {
@@ -18,12 +18,12 @@ export class FileMsisdn{
     this._name = value;
   }
 
-  get msisdnList(): string[] {
-    return this._msisdnList;
+  get msisdnArr(): string[] {
+    return this._msisdnArr;
   }
 
-  set msisdnList(value: string[]) {
-    this._msisdnList = value;
+  set msisdnArr(value: string[]) {
+    this._msisdnArr = value;
   }
 
   get unique(): string {

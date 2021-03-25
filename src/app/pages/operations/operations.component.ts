@@ -42,7 +42,6 @@ export class OperationsComponent {
 
       this.operate.forEach(name =>
         arrFileMsisdn.push(
-          // console.log(
             mapFilesMsisdn.get(name)))
 
       this.blackList.forEach(name => arrBlackListFileMsisdn.push(mapFilesMsisdn.get(name)))

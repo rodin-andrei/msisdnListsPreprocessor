@@ -13,7 +13,7 @@ export class OperationsService {
     let result = new Map<string, number>()
 
     arrayFileMsisdn.forEach(file =>{
-      file.msisdnList.forEach(msisdn => {
+      file.msisdnArr.forEach(msisdn => {
         if(!result.has(msisdn)){
           result.set(msisdn, 1)
         }else{
@@ -22,7 +22,7 @@ export class OperationsService {
       })
     })
 
-    arrBlackListFileMsisdn.forEach(file => file.msisdnList.forEach(msisdn => result.delete(msisdn)))
+    arrBlackListFileMsisdn.forEach(file => file.msisdnArr.forEach(msisdn => result.delete(msisdn)))
 
     return result
   }

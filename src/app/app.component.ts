@@ -1,4 +1,7 @@
-import {Component} from '@angular/core';
+import {Component } from '@angular/core';
+
+
+export let cookieService
 
 @Component({
   selector: 'app-root',
@@ -9,5 +12,4 @@ import {Component} from '@angular/core';
 export class AppComponent {
 
   routingLink: string = "upload"
-
 }
