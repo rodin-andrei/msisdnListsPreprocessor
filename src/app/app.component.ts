@@ -1,8 +1,5 @@
 import {Component } from '@angular/core';
 
-
-export let cookieService
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',

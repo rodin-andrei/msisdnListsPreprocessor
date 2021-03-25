@@ -1,11 +1,10 @@
-import {Component, Injectable, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {NzUploadChangeParam} from 'ng-zorro-antd/upload';
 import {ParserService} from "../../services/parser.service";
 import {OperationsService} from "../../services/operations.service";
 
 import {FileMsisdn} from '../../shared/models/filemsisdn.model';
 import {mapFilesMsisdn} from '../../shared/models/mapfilesmsisdn.model';
-import {CookieService} from "ngx-cookie-service";
 
 @Component({
   selector: 'app-drag-upload',
@@ -14,7 +13,7 @@ import {CookieService} from "ngx-cookie-service";
 
 export  class DragUploadComponent implements OnInit {
 
-  constructor(private cookies: CookieService){}
+  constructor(){}
 
   processedFiles = new Set<string>()
 
@@ -47,18 +46,16 @@ export  class DragUploadComponent implements OnInit {
   }
 
   persistFiles(file) {
-    let fileNames = Array.from(mapFilesMsisdn.keys())
-    this.cookies.set(file.name, JSON.stringify(file))
-    if (this.cookies.check(file.name)) {
-      this.cookies.set("fileNames", JSON.stringify(fileNames))
+    let fileNames = new Set(mapFilesMsisdn.keys())
+    localStorage.setItem(file.name, JSON.stringify(file))
+    if (localStorage.getItem(file.name) !== undefined) {
+      fileNames.add(file.name)
+      localStorage.setItem("fileNames", JSON.stringify(Array.from(fileNames)))
     }
   }
 
   getFileFromCookies(fileName) {
-    // let name = fileName.substring(0,fileName.lastIndexOf('$'))
-    // let extension = fileName.substring(fileName.lastIndexOf('$')+1)
-    console.log(fileName,this.cookies.check(fileName))
-    let rawFile = JSON.parse(this.cookies.get(fileName))
+    let rawFile = JSON.parse(localStorage.getItem(fileName))
     let file:FileMsisdn = new FileMsisdn(fileName, rawFile._msisdnArr)
     let similarMap = OperationsService.getUniqueSimilarMap([file],[])
     file.unique = similarMap.size.toString()
@@ -73,8 +70,8 @@ export  class DragUploadComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.cookies.check("fileNames")) {
-      let fileNames: string[] = JSON.parse(this.cookies.get("fileNames"))
+    if(localStorage.getItem("fileNames") != null) {
+      let fileNames: string[] = JSON.parse(localStorage.getItem("fileNames"))
       console.log(fileNames)
       fileNames.forEach(fileName => {
         let file = this.getFileFromCookies(fileName)
