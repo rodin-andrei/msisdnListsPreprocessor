@@ -19,6 +19,28 @@ export class OperationsComponent {
     this.resultName = document.getElementsByClassName('form-group')[0].querySelector('input').value;
   }
 
+  onLeftClick(fileName, block){
+      switch (block){
+        case 'list':
+          this.operate.push(fileName)
+          break;
+      }
+  }
+
+  onRightClick(event, fileName, block){
+    event.preventDefault();
+    switch (block) {
+      case 'list':
+        this.blackList.push(fileName)
+        break;
+      case 'operate':
+        this.operate.splice(fileName)
+        break
+      case 'blackList':
+        this.blackList.splice(fileName)
+        break;
+    }
+  }
   drop(event: CdkDragDrop<string[]>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
