@@ -12,14 +12,43 @@ import {FileMsisdn} from '../../shared/models/filemsisdn.model';
 export class OperationsComponent {
 
   resultName?:string;
-  operate = []
-  blackList = []
+  operate = new Set();
+  blackList = new Set();
 
   onInput() {
     this.resultName = document.getElementsByClassName('form-group')[0].querySelector('input').value;
   }
 
+  onLeftClick(fileName, block){
+      switch (block){
+        case 'list':
+          this.operate.add(fileName)
+          break;
+        case 'operate':
+          this.operate.delete(fileName)
+          break
+        case 'blackList':
+          this.blackList.delete(fileName)
+          break;
+      }
+  }
+
+  onRightClick(event, fileName, block){
+    event.preventDefault();
+    switch (block) {
+      case 'list':
+        this.blackList.add(fileName)
+        break;
+      case 'operate':
+        this.operate.delete(fileName)
+        break
+      case 'blackList':
+        this.blackList.delete(fileName)
+        break;
+    }
+  }
   drop(event: CdkDragDrop<string[]>) {
+    console.log(event);
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
@@ -35,17 +64,14 @@ export class OperationsComponent {
   }
 
   getOperatedArray() {
-    if (this.operate.length > 0) {
+    if (this.operate.size > 0) {
       let arrFileMsisdn: FileMsisdn[] = []
       let arrBlackListFileMsisdn: FileMsisdn[] = []
       console.log(this.operate)
 
-      this.operate.forEach(name =>
-        arrFileMsisdn.push(
-          // console.log(
-            mapFilesMsisdn.get(name)))
+      this.operate.forEach(name => arrFileMsisdn.push(mapFilesMsisdn.get(name.toString())))
 
-      this.blackList.forEach(name => arrBlackListFileMsisdn.push(mapFilesMsisdn.get(name)))
+      this.blackList.forEach(name => arrBlackListFileMsisdn.push(mapFilesMsisdn.get(name.toString())))
 
       let operatedFile: FileMsisdn = new FileMsisdn(this.resultName, Array.from(OperationsService.getUniqueSimilarMap(arrFileMsisdn, arrBlackListFileMsisdn).keys()))
 

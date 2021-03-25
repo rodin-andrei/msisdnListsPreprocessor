@@ -15,7 +15,7 @@
                   class="example-list"
                   cdkDropListSortingDisabled
                   (cdkDropListDropped)="drop($event)">
-                  <div class="example-box" *ngFor="let fileName of getFilesMsisdnNames()" cdkDrag>{{fileName}}</div>
+                  <div class="example-box" *ngFor="let fileName of getFilesMsisdnNames()" cdkDrag (click)="onLeftClick(fileName, 'list')"  (contextmenu)="onRightClick($event, fileName, 'list')">{{fileName}}</div>
           </div>
         </ng-template>
       </div>
@@ -27,7 +27,7 @@
             <div    cdkDropList
                     [cdkDropListData]="operate"
                     class="example-list"
-                    (cdkDropListDropped)="drop($event)" *ngIf="operate.length === 0; else elseOperateBlock" >
+                    (cdkDropListDropped)="drop($event)" *ngIf="operate.size === 0; else elseOperateBlock" >
                 <div class="example-box" cdkDrag>{{"Operate with"}}</div>
             </div>
           <ng-template #elseOperateBlock class="else-block">
@@ -35,7 +35,7 @@
                       [cdkDropListData]="operate"
                       class="example-list"
                       (cdkDropListDropped)="drop($event)">
-                      <div class="example-box" *ngFor="let fileName of operate" cdkDrag>{{fileName}}</div>
+                      <div class="example-box" *ngFor="let fileName of operate" cdkDrag (click)="onLeftClick(fileName, 'operate')"  (contextmenu)="onRightClick($event, fileName, 'operate')">{{fileName}}</div>
              </div>
           </ng-template>
         </div>
@@ -48,7 +48,7 @@
         <div    cdkDropList
                 [cdkDropListData]="blackList"
                 class="example-list"
-                (cdkDropListDropped)="drop($event)" *ngIf="blackList.length === 0; else elseBlackList" >
+                (cdkDropListDropped)="drop($event)" *ngIf="blackList.size === 0; else elseBlackList" >
           <div class="example-box" cdkDrag>{{"Blacklist"}}</div>
         </div>
         <ng-template #elseBlackList class="else-blocked">
@@ -56,7 +56,7 @@
                [cdkDropListData]="blackList"
                class="example-list"
                (cdkDropListDropped)="drop($event)">
-            <div class="example-box" *ngFor="let fileName of blackList" cdkDrag>{{fileName}}</div>
+            <div class="example-box" *ngFor="let fileName of blackList" cdkDrag (click)="onLeftClick(fileName, 'blackList')"  (contextmenu)="onRightClick($event, fileName, 'blackList')">{{fileName}}</div>
           </div>
         </ng-template>
       </div>
