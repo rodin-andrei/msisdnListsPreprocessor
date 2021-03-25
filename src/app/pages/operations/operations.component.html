@@ -27,7 +27,7 @@
             <div    cdkDropList
                     [cdkDropListData]="operate"
                     class="example-list"
-                    (cdkDropListDropped)="drop($event)" *ngIf="operate.size === 0; else elseOperateBlock" >
+                    (cdkDropListDropped)="drop($event)" *ngIf="operate.length === 0; else elseOperateBlock" >
                 <div class="example-box" cdkDrag>{{"Operate with"}}</div>
             </div>
           <ng-template #elseOperateBlock class="else-block">
@@ -48,7 +48,7 @@
         <div    cdkDropList
                 [cdkDropListData]="blackList"
                 class="example-list"
-                (cdkDropListDropped)="drop($event)" *ngIf="blackList.size === 0; else elseBlackList" >
+                (cdkDropListDropped)="drop($event)" *ngIf="blackList.length === 0; else elseBlackList" >
           <div class="example-box" cdkDrag>{{"Blacklist"}}</div>
         </div>
         <ng-template #elseBlackList class="else-blocked">

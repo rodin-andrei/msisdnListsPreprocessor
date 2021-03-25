@@ -12,8 +12,8 @@ import {FileMsisdn} from '../../shared/models/filemsisdn.model';
 export class OperationsComponent {
 
   resultName?:string;
-  operate = new Set();
-  blackList = new Set();
+  operate = [];
+  blackList = [];
 
   onInput() {
     this.resultName = document.getElementsByClassName('form-group')[0].querySelector('input').value;
@@ -22,13 +22,7 @@ export class OperationsComponent {
   onLeftClick(fileName, block){
       switch (block){
         case 'list':
-          this.operate.add(fileName)
-          break;
-        case 'operate':
-          this.operate.delete(fileName)
-          break
-        case 'blackList':
-          this.blackList.delete(fileName)
+          this.operate.push(fileName)
           break;
       }
   }
@@ -37,18 +31,17 @@ export class OperationsComponent {
     event.preventDefault();
     switch (block) {
       case 'list':
-        this.blackList.add(fileName)
+        this.blackList.push(fileName)
         break;
       case 'operate':
-        this.operate.delete(fileName)
+        this.operate.splice(fileName)
         break
       case 'blackList':
-        this.blackList.delete(fileName)
+        this.blackList.splice(fileName)
         break;
     }
   }
   drop(event: CdkDragDrop<string[]>) {
-    console.log(event);
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
@@ -64,7 +57,7 @@ export class OperationsComponent {
   }
 
   getOperatedArray() {
-    if (this.operate.size > 0) {
+    if (this.operate.length > 0) {
       let arrFileMsisdn: FileMsisdn[] = []
       let arrBlackListFileMsisdn: FileMsisdn[] = []
       console.log(this.operate)
