@@ -8,19 +8,21 @@ import {DownloadService} from "../../services/download.service";
   styleUrls: ['./uploaded-files.component.css']
 })
 export class UploadedFilesComponent {
-  //for access in this component.html
-  mapFilesMsisdn = mapFilesMsisdn
   DownloadService = DownloadService;
 
-  getFileNames() {
-    return Array.from(mapFilesMsisdn.keys())
+  getFiles() {
+    return Array.from(mapFilesMsisdn.values())
   }
 
-  showInfo(mapFilesMsisdn){
-    if (document.getElementById(mapFilesMsisdn.name + "InfoBar").style.display==="block"){
-      document.getElementById(mapFilesMsisdn.name + "InfoBar").style.display="none";
+  getKeysOfSimilar(file) {
+    return Array.from(file.similar.keys())
+  }
+
+  showInfo(fileMsisdn){
+    if (document.getElementById(fileMsisdn.name + "InfoBar").style.display==="block"){
+      document.getElementById(fileMsisdn.name + "InfoBar").style.display="none";
     }else {
-      document.getElementById(mapFilesMsisdn.name + "InfoBar").style.display="block";
+      document.getElementById(fileMsisdn.name + "InfoBar").style.display="block";
     }
   }
 }
