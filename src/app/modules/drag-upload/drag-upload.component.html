@@ -1,9 +1,9 @@
-<nz-upload
+<nz-upload  nzAccept=".xlsx, .xls, .csv"
       nzType="drag"
       [nzMultiple]="true"
       (nzChange)="handleChange($event)"
       [nzShowUploadList]="false"
-      [nzSize]="0" [nzAccept]="['.xlsx']['.xls']">
+      [nzSize]="0" >
       <p class="ant-upload-drag-icon">
         <i nz-icon nzType="inbox"></i>
       </p>
