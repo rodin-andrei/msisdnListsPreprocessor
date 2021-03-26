@@ -3,6 +3,7 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/dra
 import { mapFilesMsisdn } from '../../shared/models/mapfilesmsisdn.model';
 import {OperationsService} from '../../services/operations.service';
 import {FileMsisdn} from '../../shared/models/filemsisdn.model';
+import {LocalstorageService} from "../../services/localstorage.service";
 
 @Component({
   selector: 'app-operations',
@@ -68,11 +69,12 @@ export class OperationsComponent {
 
       this.blackList.forEach(name => arrBlackListFileMsisdn.push(mapFilesMsisdn.get(name)))
 
-      let operatedFile: FileMsisdn = new FileMsisdn(this.resultName,
+      let resultFile: FileMsisdn = new FileMsisdn(this.resultName,
         Array.from(OperationsService.getUniqueSimilarMap(arrFileMsisdn,
           arrBlackListFileMsisdn).keys()), "unique")
 
-      mapFilesMsisdn.set(this.resultName, operatedFile)
+      mapFilesMsisdn.set(this.resultName, resultFile)
+      LocalstorageService.persistFile(resultFile)
     }
   }
 
