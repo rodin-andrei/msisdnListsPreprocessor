@@ -30,7 +30,7 @@ export  class DragUploadComponent implements OnInit{
 
         this.processedFiles.add(uploadedFileName)
         ParserService.parseXlsCsv(uploadedFile.originFileObj, (result) => {
-          OperationsService.addFile(new FileMsisdn(uploadedFileName, result, uploadedFileExtension), "", "")
+          OperationsService.addFile(new FileMsisdn(uploadedFileName, result, uploadedFileExtension), "", [])
         })
       }
     })
