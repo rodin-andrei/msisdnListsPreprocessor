@@ -23,7 +23,9 @@ export class OperationsComponent {
 
   onLeftClick(fileName, block){
       if (block === 'list') {
+        if(!this.operate.includes(fileName)){
           this.operate.push(fileName)
+        }
       }
   }
 
@@ -31,15 +33,18 @@ export class OperationsComponent {
     event.preventDefault();
     switch (block) {
       case 'list':
-        this.blackList.push(fileName)
+        if(!this.blackList.includes(fileName)) {
+          this.blackList.push(fileName)
+        }
         break;
       case 'operate':
-        this.operate.splice(fileName)
+        this.operate.splice(this.operate.indexOf(fileName), 1)
         break
       case 'blackList':
-        this.blackList.splice(fileName)
+        this.blackList.splice(this.blackList.indexOf(fileName), 1)
     }
   }
+
   drop(event: CdkDragDrop<string[]>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data,
