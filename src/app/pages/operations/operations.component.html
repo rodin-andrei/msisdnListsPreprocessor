@@ -1,5 +1,11 @@
 <div cdkDropListGroup class="cdk-main">
-  <div class="row"><button type="button" class="btn btn-primary col-2" (click)="popMenuShow()" style="height: 40px; left: 35px; top: 10px">Get Unique</button></div>
+  <div class="row">
+    <div class="col-4">
+      <div class="row">
+        <button type="button" class="btn btn-primary col-4" (click)="popMenuShow()" style="margin-left: 36px;  height: 40px;top: 10px">Operations</button>
+      </div>
+    </div>
+  </div>
   <div class="uploaded-view-container">
     <cdk-virtual-scroll-viewport class="uploaded-view-port" itemSize="16">
       <div class="example-container">
@@ -79,9 +85,10 @@
             </div>
           </form>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" (click)="popMenuHide()">Close</button>
-          <button type="submit" class="btn btn-primary" (click)="onInput(); getOperatedArray(); popMenuHide()">Get</button>
+        <div class="modal-footer d-flex">
+          <button type="button" class="btn btn-secondary mr-auto p-2" (click)="popMenuHide()">Close</button>
+          <button type="submit" class="btn btn-primary p-2" (click)="onInput(); getOperatedArray('getUnique'); popMenuHide()">Get Unique</button>
+          <button type="submit" class="btn btn-primary p-2" (click)="onInput(); getOperatedArray('clearList'); popMenuHide()">Clear List</button>
         </div>
       </div>
     </div>

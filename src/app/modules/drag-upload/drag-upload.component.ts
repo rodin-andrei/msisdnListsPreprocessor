@@ -30,25 +30,10 @@ export  class DragUploadComponent implements OnInit{
 
         this.processedFiles.add(uploadedFileName)
         ParserService.parseXlsCsv(uploadedFile.originFileObj, (result) => {
-          this.addFile(new FileMsisdn(uploadedFileName, result, uploadedFileExtension))
+          OperationsService.addFile(new FileMsisdn(uploadedFileName, result, uploadedFileExtension), "", "")
         })
       }
     })
-  }
-
-  addFile(fileMsisdn:FileMsisdn) {
-    let mapSubscribers = OperationsService.getUniqueSimilarMap(new Array(fileMsisdn),[])
-    fileMsisdn.unique=mapSubscribers.size.toString();
-    fileMsisdn.similar=(new Map())
-
-    for (let [key, value] of mapSubscribers) {
-      if (value!==1){
-        fileMsisdn.similar.set(key, value);
-      }
-    }
-    fileMsisdn.extension=(fileMsisdn.extension)
-    mapFilesMsisdn.set(fileMsisdn.name, fileMsisdn)
-    LocalstorageService.persistFile(fileMsisdn)
   }
 
   ngOnInit(): void {

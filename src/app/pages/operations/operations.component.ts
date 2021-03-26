@@ -4,6 +4,7 @@ import { mapFilesMsisdn } from '../../shared/models/mapfilesmsisdn.model';
 import {OperationsService} from '../../services/operations.service';
 import {FileMsisdn} from '../../shared/models/filemsisdn.model';
 import {LocalstorageService} from "../../services/localstorage.service";
+import {DragUploadComponent} from "../../modules/drag-upload/drag-upload.component";
 
 @Component({
   selector: 'app-operations',
@@ -62,21 +63,26 @@ export class OperationsComponent {
     return Array.from(mapFilesMsisdn.keys())
   }
 
-  getOperatedArray() {
+  getOperatedArray(operation){
     if (this.operate.length > 0) {
       let arrFileMsisdn: FileMsisdn[] = []
       let arrBlackListFileMsisdn: FileMsisdn[] = []
-
+      let blackListSet = new Set();
+      let result = []
       this.operate.forEach(name => arrFileMsisdn.push(mapFilesMsisdn.get(name)))
-
       this.blackList.forEach(name => arrBlackListFileMsisdn.push(mapFilesMsisdn.get(name)))
-
-      let resultFile: FileMsisdn = new FileMsisdn(this.resultName,
-        Array.from(OperationsService.getUniqueSimilarMap(arrFileMsisdn,
-          arrBlackListFileMsisdn).keys()), "unique")
-
-      mapFilesMsisdn.set(this.resultName, resultFile)
-      LocalstorageService.persistFile(resultFile)
+      arrBlackListFileMsisdn.forEach(msisdnFile =>{
+        msisdnFile.msisdnArr.forEach(msisdn =>{
+          blackListSet.add(msisdn);
+        })
+      })
+      arrFileMsisdn.forEach(file => {
+        file.msisdnArr.forEach(msisdn => {
+          result.push(msisdn);
+        })
+      })
+      let tempFile: FileMsisdn = new FileMsisdn(this.resultName, Array.from(result), operation);
+      OperationsService.addFile(tempFile, operation, blackListSet)
     }
   }
 
