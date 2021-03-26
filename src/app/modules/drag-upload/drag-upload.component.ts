@@ -5,6 +5,7 @@ import {OperationsService} from "../../services/operations.service";
 
 import {FileMsisdn} from '../../shared/models/filemsisdn.model';
 import {mapFilesMsisdn} from '../../shared/models/mapfilesmsisdn.model';
+import {LocalstorageService} from "../../services/localstorage.service";
 
 @Component({
   selector: 'app-drag-upload',
@@ -42,39 +43,14 @@ export  class DragUploadComponent implements OnInit {
     }
     fileMsisdn.extension=(uploadedFileExtension)
     mapFilesMsisdn.set(uploadedFileName, fileMsisdn)
-    this.persistFiles(fileMsisdn)
-  }
-
-  persistFiles(file) {
-    let fileNames = new Set(mapFilesMsisdn.keys())
-    localStorage.setItem(file.name, JSON.stringify(file))
-    if (localStorage.getItem(file.name) !== undefined) {
-      fileNames.add(file.name)
-      localStorage.setItem("fileNames", JSON.stringify(Array.from(fileNames)))
-    }
-  }
-
-  getFileFromCookies(fileName) {
-    let rawFile = JSON.parse(localStorage.getItem(fileName))
-    let file:FileMsisdn = new FileMsisdn(fileName, rawFile._msisdnArr)
-    let similarMap = OperationsService.getUniqueSimilarMap([file],[])
-    file.unique = similarMap.size.toString()
-    file.similar = new Map()
-    file.extension = rawFile._extension
-    for (let [key, value] of similarMap) {
-      if (value!==1){
-        file.similar.set(key, value);
-      }
-    }
-    return file
+    LocalstorageService.persistFile(fileMsisdn)
   }
 
   ngOnInit(): void {
     if(localStorage.getItem("fileNames") != null) {
       let fileNames: string[] = JSON.parse(localStorage.getItem("fileNames"))
-      console.log(fileNames)
       fileNames.forEach(fileName => {
-        let file = this.getFileFromCookies(fileName)
+        let file = LocalstorageService.getFileFromStorage(fileName)
         mapFilesMsisdn.set(file.name, file)
       })
     }

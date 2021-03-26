@@ -21,7 +21,6 @@ export class OperationsService {
         }
       })
     })
-
     arrBlackListFileMsisdn.forEach(file => file.msisdnArr.forEach(msisdn => result.delete(msisdn)))
 
     return result
