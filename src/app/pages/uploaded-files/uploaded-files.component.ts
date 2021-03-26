@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { mapFilesMsisdn } from '../../shared/models/mapfilesmsisdn.model';
 import {DownloadService} from "../../services/download.service";
+import {LocalstorageService} from "../../services/localstorage.service";
 
 @Component({
   selector: 'app-upload',
@@ -16,6 +17,15 @@ export class UploadedFilesComponent {
 
   getKeysOfSimilar(file) {
     return Array.from(file.similar.keys())
+  }
+
+  downloadFile(file) {
+    DownloadService.download(file.msisdnArr, file.name)
+  }
+
+  deleteFile(fileName){
+    mapFilesMsisdn.delete(fileName)
+    LocalstorageService.removeFile(fileName)
   }
 
   showInfo(fileMsisdn){

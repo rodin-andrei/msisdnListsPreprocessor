@@ -12,7 +12,7 @@ import {LocalstorageService} from "../../services/localstorage.service";
   templateUrl: './drag-upload.component.html'
 })
 
-export  class DragUploadComponent implements OnInit {
+export  class DragUploadComponent implements OnInit{
 
   constructor(){}
 
@@ -41,8 +41,6 @@ export  class DragUploadComponent implements OnInit {
     fileMsisdn.unique=mapSubscribers.size.toString();
     fileMsisdn.similar=(new Map())
 
-    console.log(fileMsisdn)
-
     for (let [key, value] of mapSubscribers) {
       if (value!==1){
         fileMsisdn.similar.set(key, value);
@@ -54,13 +52,6 @@ export  class DragUploadComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if(localStorage.getItem("fileNames") != null) {
-      let fileNames: string[] = JSON.parse(localStorage.getItem("fileNames"))
-
-      fileNames.forEach(fileName => {
-        let file = LocalstorageService.getFileFromStorage(fileName)
-        mapFilesMsisdn.set(file.name, file)
-      })
-    }
+    LocalstorageService.OnInit()
   }
 }

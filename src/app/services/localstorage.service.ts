@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {FileMsisdn} from "../shared/models/filemsisdn.model";
 import {OperationsService} from "./operations.service";
 import {mapFilesMsisdn} from "../shared/models/mapfilesmsisdn.model";
@@ -27,13 +27,39 @@ export class LocalstorageService {
     return file
   }
 
-  static persistFile(file) {
+  static persistFile(file:FileMsisdn) {
     let fileNames = new Set(mapFilesMsisdn.keys())
     localStorage.setItem(file.name, JSON.stringify(file))
 
-    if (localStorage.getItem(file.name) !== undefined) {
+    if (localStorage.getItem(file.name) !== null) {
       fileNames.add(file.name)
-      localStorage.setItem("fileNames", JSON.stringify(Array.from(fileNames)))
+      this.persistFileNames(Array.from(fileNames))
+    }
+  }
+
+  static removeFile(fileName) {
+    let fileNames= this.getFileNames()
+    localStorage.removeItem(fileName)
+    fileNames.splice(fileNames.indexOf(fileName), 1)
+    this.persistFileNames(fileNames)
+  }
+
+  static persistFileNames(fileNames) {
+    localStorage.setItem("fileNames", JSON.stringify(fileNames))
+  }
+
+  static getFileNames() {
+    return JSON.parse(localStorage.getItem("fileNames"))
+  }
+
+  static OnInit() {
+    if(localStorage.getItem("fileNames") != null) {
+      let fileNames = this.getFileNames()
+
+      fileNames.forEach(fileName => {
+        let file = LocalstorageService.getFileFromStorage(fileName)
+        mapFilesMsisdn.set(file.name, file)
+      })
     }
   }
 }

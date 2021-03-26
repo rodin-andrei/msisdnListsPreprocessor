@@ -10,7 +10,6 @@ export class DownloadService {
 
   static download(listMsisdn, fileName){
     let StringMsisdn = [];
-    console.log(fileName);
     StringMsisdn.push(listMsisdn[0].toString());
 
     for (let i = 1; i < listMsisdn.length; i++) {

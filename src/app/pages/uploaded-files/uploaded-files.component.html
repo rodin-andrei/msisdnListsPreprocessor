@@ -1,53 +1,56 @@
 <cdk-virtual-scroll-viewport class="view-port" itemSize="16" style="background-color: white">
   <div class="row" style="padding-top: 15px">
-    <div class="col-2 text-center"><h5>Name</h5></div>
-    <div class="col-3 text-center"><h5>Number of records</h5></div>
-    <div class="col-2 text-center"><h5>Unique</h5></div>
-    <div class="col-2 text-center"><h5>Similar</h5></div>
-    <div class="col-1 text-center"><h5>Extension</h5></div>
-    <div class="col-2 text-center"><h5></h5></div>
+    <div class="col-3 text-center" style="padding-right: 20px;"><h6>Name</h6></div>
+    <div class="col-2 text-center" ><h6>Records</h6></div>
+    <div class="col-2 text-center"><h6>Unique</h6></div>
+    <div class="col-2 text-center"><h6>Similar</h6></div>
+    <div class="col-1 text-center"><h6>Extension</h6></div>
+    <div class="col-2 text-center"><h6></h6></div>
+
+
 
   </div><hr style="height: 2px; color: black; background-color: gray;">
-  <div class="col-12"  *ngFor="let file of getFiles()" >
-    <div class="row" style="cursor: pointer;">
-      <div class="col-10" (click)="showInfo(file)">
-        <div class="row">
-          <div class="col-3 text-left" style="height: 18px; overflow: hidden;
-          font-size: 12px; line-height: 16px;">
-            <h6>{{file.name}}</h6></div>
-          <div class="col-4 text-center">{{file.msisdnArr.length}}</div>
-          <div class="col-2 text-center">{{file.unique}}</div>
-          <div class="col-2 text-center" *ngIf="file.similar !== undefined; else elseBlock">{{file.similar.size}}</div>
-          <ng-template #elseBlock>
-            <div class="col-2 text-center">{{""}}</div>
-          </ng-template>
-          <div class="col-1 text-center">{{file.extension}}</div>
+    <div class="col-12" *ngFor="let file of getFiles()" >
+      <div class="row" style="cursor: pointer;">
+        <div class="col-3 text-center" style="height: 18px; overflow: hidden;
+        font-size: 12px; line-height: 16px;" (click)="showInfo(file)">
+          <h6>{{file.name}}</h6></div>
+        <div class="col-2 text-center" (click)="showInfo(file)">{{file.msisdnArr.length}}</div>
+        <div class="col-2 text-center" (click)="showInfo(file)">{{file.unique}}</div>
+        <div class="col-2 text-center" *ngIf="file.similar !== undefined; else elseBlock"
+             (click)="showInfo(file)">{{file.similar.size}}</div>
+        <ng-template #elseBlock>
+          <div class="col-2 text-center" (click)="showInfo(file)">{{""}}</div>
+        </ng-template>
+        <div class="col-1 text-center" style="padding-left: 35px" (click)="showInfo(file)">
+          {{file.extension}}</div>
+        <div class="col-1 text-right" (click)="downloadFile(file)">
+          <i nz-icon nzType="download" nzTheme="outline"></i>
         </div>
-      </div>
-      <div class="col-2 text-center" (click)="DownloadService.download(file.msisdnArr, file.name)">
-        <button style="border: none; background-color: white"><i nz-icon nzType="download"></i></button>
-      </div>
-      <div class="col-12"><hr></div>
+        <div class="col-1 text-center" (click)="deleteFile(file.name)">
+          <i  nz-icon nzType="delete" nzTheme="outline"></i>
+        </div>
+    </div>
+    <div class="col-12"><hr></div>
       <div class="col-12" style="display: none;" id="{{file.name}}InfoBar">
-          <div class="container" *ngIf="file.similar !== undefined; else elseBlockSimilar">
-              <div class="row">
-                <div class="col-3"><h6>msisdn</h6></div>
-                <div class="col-3"><h6>duplicates</h6></div>
-                <div class="col-3"></div>
-                <div class="col-3"></div>
-              </div>
-              <div class="row" *ngFor="let fileSimilar of getKeysOfSimilar(file)">
-                <div class="col-3"><div>{{fileSimilar}}</div></div>
-                <div class="col-3"><div>{{file.similar.get(fileSimilar)}}</div></div>
-                <div class="col-3"></div>
-                <div class="col-3"></div>
-              </div>
+        <div class="container" *ngIf="file.similar !== undefined; else elseBlockSimilar">
+          <div class="row">
+            <div class="col-3"><h6>msisdn</h6></div>
+            <div class="col-3"><h6>duplicates</h6></div>
+            <div class="col-3"></div>
+            <div class="col-3"></div>
           </div>
-          <ng-template #elseBlockSimilar>
-            <div class="col-6">{{""}}</div>
-          </ng-template>
-        <div class="col-12"><hr></div>
-      </div>
+          <div class="row" *ngFor="let fileSimilar of getKeysOfSimilar(file)">
+            <div class="col-3"><div>{{fileSimilar}}</div></div>
+            <div class="col-3"><div>{{file.similar.get(fileSimilar)}}</div></div>
+            <div class="col-3"></div>
+            <div class="col-3"></div>
+          </div>
+        </div>
+        <ng-template #elseBlockSimilar>
+          <div class="col-6">{{""}}</div>
+        </ng-template>
+      <div class="col-12"><hr></div>
     </div>
   </div>
 </cdk-virtual-scroll-viewport>

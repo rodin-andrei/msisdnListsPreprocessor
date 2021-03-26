@@ -61,11 +61,8 @@ export class OperationsComponent {
     if (this.operate.length > 0) {
       let arrFileMsisdn: FileMsisdn[] = []
       let arrBlackListFileMsisdn: FileMsisdn[] = []
-      console.log(this.operate)
 
-      this.operate.forEach(name =>
-        arrFileMsisdn.push(
-            mapFilesMsisdn.get(name)))
+      this.operate.forEach(name => arrFileMsisdn.push(mapFilesMsisdn.get(name)))
 
       this.blackList.forEach(name => arrBlackListFileMsisdn.push(mapFilesMsisdn.get(name)))
 
