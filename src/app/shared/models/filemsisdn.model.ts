@@ -5,9 +5,10 @@ export class FileMsisdn{
   private _similar:Map<string,number>
   private _extension:string
 
-  constructor(name, msisdnList) {
+  constructor(name, msisdnList,extension) {
     this._name = name;
     this._msisdnArr = msisdnList;
+    this._extension = extension
   }
 
   get name(): string {

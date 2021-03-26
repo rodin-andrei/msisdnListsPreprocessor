@@ -9,7 +9,8 @@ export class OperationsService {
 
   constructor() { }
 
-  static getUniqueSimilarMap(arrayFileMsisdn:FileMsisdn[], arrBlackListFileMsisdn: FileMsisdn[]) {
+  static getUniqueSimilarMap(arrayFileMsisdn:FileMsisdn[],
+                             arrBlackListFileMsisdn: FileMsisdn[]) {
     let result = new Map<string, number>()
 
     arrayFileMsisdn.forEach(file =>{
@@ -21,7 +22,8 @@ export class OperationsService {
         }
       })
     })
-    arrBlackListFileMsisdn.forEach(file => file.msisdnArr.forEach(msisdn => result.delete(msisdn)))
+    arrBlackListFileMsisdn.forEach(file => file.msisdnArr
+      .forEach(msisdn => result.delete(msisdn)))
 
     return result
   }

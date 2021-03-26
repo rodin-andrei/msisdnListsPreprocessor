@@ -16,14 +16,13 @@ export class OperationsComponent {
   blackList = []
 
   onInput() {
-    this.resultName = document.getElementsByClassName('form-group')[0].querySelector('input').value;
+    this.resultName = document.getElementsByClassName('form-group')[0]
+      .querySelector('input').value;
   }
 
   onLeftClick(fileName, block){
-      switch (block){
-        case 'list':
+      if (block === 'list') {
           this.operate.push(fileName)
-          break;
       }
   }
 
@@ -38,12 +37,13 @@ export class OperationsComponent {
         break
       case 'blackList':
         this.blackList.splice(fileName)
-        break;
     }
   }
   drop(event: CdkDragDrop<string[]>) {
     if (event.previousContainer === event.container) {
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+      moveItemInArray(event.container.data,
+        event.previousIndex,
+        event.currentIndex);
     } else {
       transferArrayItem(event.previousContainer.data,
           event.container.data,
@@ -68,22 +68,27 @@ export class OperationsComponent {
 
       this.blackList.forEach(name => arrBlackListFileMsisdn.push(mapFilesMsisdn.get(name)))
 
-      let operatedFile: FileMsisdn = new FileMsisdn(this.resultName, Array.from(OperationsService.getUniqueSimilarMap(arrFileMsisdn, arrBlackListFileMsisdn).keys()))
-
-      operatedFile.extension = "unique"
+      let operatedFile: FileMsisdn = new FileMsisdn(this.resultName,
+        Array.from(OperationsService.getUniqueSimilarMap(arrFileMsisdn,
+          arrBlackListFileMsisdn).keys()), "unique")
 
       mapFilesMsisdn.set(this.resultName, operatedFile)
     }
   }
 
   popMenuShow(){
-    document.getElementById('exampleModal').style.display="block";
-    document.getElementById('exampleModal').className="popup-fade modal fade show";
-    document.getElementsByClassName("form-group")[0].querySelector('input').value = "new_result";
+    document.getElementById('exampleModal')
+      .style.display="block";
+    document.getElementById('exampleModal')
+      .className="popup-fade modal fade show";
+    document.getElementsByClassName("form-group")[0]
+      .querySelector('input').value = "new_result";
   }
 
   popMenuHide(){
-    document.getElementById('exampleModal').style.display="none";
-    document.getElementById("exampleModal").className="modal fade show";
+    document.getElementById('exampleModal')
+      .style.display="none";
+    document.getElementById("exampleModal")
+      .className="modal fade show";
   }
 }

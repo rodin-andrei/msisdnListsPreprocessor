@@ -12,11 +12,13 @@ export class LocalstorageService {
 
   static getFileFromStorage(fileName) {
     let rawFile = JSON.parse(localStorage.getItem(fileName))
-    let file:FileMsisdn = new FileMsisdn(fileName, rawFile._msisdnArr)
+    let file:FileMsisdn = new FileMsisdn(fileName, rawFile._msisdnArr, "raw")
     let similarMap = OperationsService.getUniqueSimilarMap([file],[])
+
     file.unique = similarMap.size.toString()
     file.similar = new Map()
     file.extension = rawFile._extension
+
     for (let [key, value] of similarMap) {
       if (value!==1){
         file.similar.set(key, value);
@@ -28,6 +30,7 @@ export class LocalstorageService {
   static persistFile(file) {
     let fileNames = new Set(mapFilesMsisdn.keys())
     localStorage.setItem(file.name, JSON.stringify(file))
+
     if (localStorage.getItem(file.name) !== undefined) {
       fileNames.add(file.name)
       localStorage.setItem("fileNames", JSON.stringify(Array.from(fileNames)))

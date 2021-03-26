@@ -20,35 +20,43 @@ export  class DragUploadComponent implements OnInit {
 
   handleChange({fileList}: NzUploadChangeParam) {
     fileList.forEach( uploadedFile => {
-      let uploadedFileName: string = uploadedFile.originFileObj.name.substr(0, uploadedFile.originFileObj.name.lastIndexOf("."))
-      let uploadedFileExtension = uploadedFile.originFileObj.name.substr(uploadedFile.originFileObj.name.lastIndexOf(".") + 1)
+      let uploadedFileName: string = uploadedFile.originFileObj.name.substr(0,
+        uploadedFile.originFileObj.name.lastIndexOf("."))
+
+      let uploadedFileExtension = uploadedFile.originFileObj.name
+        .substr(uploadedFile.originFileObj.name.lastIndexOf(".") + 1)
 
       if (!this.processedFiles.has(uploadedFileName) && !mapFilesMsisdn.has(uploadedFileName)) {
+
         this.processedFiles.add(uploadedFileName)
-        ParserService.parseXlsCsv(uploadedFile.originFileObj, (result) =>{
-          this.addFile(uploadedFileName, new FileMsisdn(uploadedFileName, result), uploadedFileExtension)
+        ParserService.parseXlsCsv(uploadedFile.originFileObj, (result) => {
+          this.addFile(new FileMsisdn(uploadedFileName, result, uploadedFileExtension))
         })
       }
     })
   }
 
-  addFile(uploadedFileName:string, fileMsisdn:FileMsisdn, uploadedFileExtension:string) {
+  addFile(fileMsisdn:FileMsisdn) {
     let mapSubscribers = OperationsService.getUniqueSimilarMap(new Array(fileMsisdn),[])
     fileMsisdn.unique=mapSubscribers.size.toString();
     fileMsisdn.similar=(new Map())
+
+    console.log(fileMsisdn)
+
     for (let [key, value] of mapSubscribers) {
       if (value!==1){
         fileMsisdn.similar.set(key, value);
       }
     }
-    fileMsisdn.extension=(uploadedFileExtension)
-    mapFilesMsisdn.set(uploadedFileName, fileMsisdn)
+    fileMsisdn.extension=(fileMsisdn.extension)
+    mapFilesMsisdn.set(fileMsisdn.name, fileMsisdn)
     LocalstorageService.persistFile(fileMsisdn)
   }
 
   ngOnInit(): void {
     if(localStorage.getItem("fileNames") != null) {
       let fileNames: string[] = JSON.parse(localStorage.getItem("fileNames"))
+
       fileNames.forEach(fileName => {
         let file = LocalstorageService.getFileFromStorage(fileName)
         mapFilesMsisdn.set(file.name, file)
