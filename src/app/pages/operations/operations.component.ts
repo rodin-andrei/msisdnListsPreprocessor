@@ -71,18 +71,14 @@ export class OperationsComponent {
       let result = []
       this.operate.forEach(name => arrFileMsisdn.push(mapFilesMsisdn.get(name)))
       this.blackList.forEach(name => arrBlackListFileMsisdn.push(mapFilesMsisdn.get(name)))
-      arrBlackListFileMsisdn.forEach(msisdnFile =>{
-        msisdnFile.msisdnArr.forEach(msisdn =>{
-          blackListSet.add(msisdn);
-        })
-      })
+
       arrFileMsisdn.forEach(file => {
         file.msisdnArr.forEach(msisdn => {
           result.push(msisdn);
         })
       })
       let tempFile: FileMsisdn = new FileMsisdn(this.resultName, Array.from(result), operation);
-      OperationsService.addFile(tempFile, operation, blackListSet)
+      OperationsService.addFile(tempFile, operation, arrBlackListFileMsisdn)
     }
   }
 

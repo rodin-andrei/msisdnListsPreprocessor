@@ -31,19 +31,27 @@ export class OperationsService {
     return result
   }
 
-  static addFile(fileMsisdn:FileMsisdn, opertion, blacklist) {
+  static addFile(fileMsisdn:FileMsisdn, operation, blacklist) {
     let mapSubscribers = OperationsService.getUniqueSimilarMap(new Array(fileMsisdn), blacklist)
+    console.log(mapSubscribers)
     fileMsisdn.unique=mapSubscribers.size.toString();
     fileMsisdn.extension=(fileMsisdn.extension)
-    fileMsisdn.similar=(new Map())
-    if (opertion == "getUnique"){
+
+    if (operation == "getUnique"){
       fileMsisdn.msisdnArr = Array.from(mapSubscribers.keys());
     }else{
+      fileMsisdn.similar=(new Map())
+      fileMsisdn.msisdnArr=[];
+
       for (let [key, value] of mapSubscribers) {
+        for (let i = 0; i < value; i ++){
+          fileMsisdn.msisdnArr.push(key);
+        }
         if (value!==1){
           fileMsisdn.similar.set(key, value);
         }
       }
+      console.log(mapSubscribers)
     }
     mapFilesMsisdn.set(fileMsisdn.name, fileMsisdn)
     LocalstorageService.persistFile(fileMsisdn)
