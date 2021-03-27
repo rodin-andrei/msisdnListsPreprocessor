@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { mapFilesMsisdn } from '../../shared/models/mapfilesmsisdn.model';
 import {DownloadService} from "../../services/download.service";
 import {LocalstorageService} from "../../services/localstorage.service";
+import {FilesMapModel} from "../../shared/models/filesMap.model";
+
 
 @Component({
   selector: 'app-upload',
@@ -9,10 +10,13 @@ import {LocalstorageService} from "../../services/localstorage.service";
   styleUrls: ['./uploaded-files.component.css']
 })
 export class UploadedFilesComponent {
-  DownloadService = DownloadService;
+
+  deleteAllFiles() {
+    FilesMapModel.deleteAllFiles()
+  }
 
   getFiles() {
-    return Array.from(mapFilesMsisdn.values())
+    return FilesMapModel.getFiles()
   }
 
   getKeysOfSimilar(file) {
@@ -24,15 +28,15 @@ export class UploadedFilesComponent {
   }
 
   deleteFile(fileName){
-    mapFilesMsisdn.delete(fileName)
+    FilesMapModel.deleteFile(fileName)
     LocalstorageService.removeFile(fileName)
   }
 
-  showInfo(fileMsisdn){
-    if (document.getElementById(fileMsisdn.name + "InfoBar").style.display==="block"){
-      document.getElementById(fileMsisdn.name + "InfoBar").style.display="none";
+  showInfo(file){
+    if (document.getElementById(file.name + "InfoBar").style.display==="block"){
+      document.getElementById(file.name + "InfoBar").style.display="none";
     }else {
-      document.getElementById(fileMsisdn.name + "InfoBar").style.display="block";
+      document.getElementById(file.name + "InfoBar").style.display="block";
     }
   }
 }

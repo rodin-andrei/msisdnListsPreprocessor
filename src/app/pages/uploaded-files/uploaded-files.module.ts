@@ -8,20 +8,22 @@ import { CommonModule } from "@angular/common";
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {NzButtonModule} from "ng-zorro-antd/button";
 import {NzIconModule} from "ng-zorro-antd/icon";
+import {NgbButtonsModule} from "@ng-bootstrap/ng-bootstrap";
 
 
 @NgModule({
-  imports: [
-    ScrollingModule,
-    NzListModule,
-    NzGridModule,
-    NzCardModule,
-    CommonModule,
-    DragDropModule,
-    NzButtonModule,
-    NzIconModule
+    imports: [
+        ScrollingModule,
+        NzListModule,
+        NzGridModule,
+        NzCardModule,
+        CommonModule,
+        DragDropModule,
+        NzButtonModule,
+        NzIconModule,
+        NgbButtonsModule
 
-  ],
+    ],
   declarations: [
       UploadedFilesComponent
   ],

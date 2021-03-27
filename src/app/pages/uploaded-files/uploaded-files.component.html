@@ -5,7 +5,9 @@
     <div class="col-2 text-center"><h6>Unique</h6></div>
     <div class="col-2 text-center"><h6>Similar</h6></div>
     <div class="col-1 text-center"><h6>Extension</h6></div>
-    <div class="col-2 text-center"><h6></h6></div>
+    <div class="col-2 text-center button" (click)="deleteAllFiles()">
+      <h6><button style="border: none; background: none" nz-icon nzType="delete" nzTheme="twotone"></button></h6>
+    </div>
 
 
 
@@ -28,7 +30,7 @@
           <i nz-icon nzType="download" nzTheme="outline"></i>
         </div>
         <div class="col-1 text-center" (click)="deleteFile(file.name)">
-          <i  nz-icon nzType="delete" nzTheme="outline"></i>
+          <i  nz-icon nzType="delete" nzTheme="twotone"></i>
         </div>
     </div>
     <div class="col-12"><hr></div>

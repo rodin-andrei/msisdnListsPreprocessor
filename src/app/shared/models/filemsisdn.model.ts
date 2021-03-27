@@ -1,7 +1,7 @@
 export class FileMsisdn{
   private _name:string
   private _msisdnArr:string[]
-  private _unique:string
+  private _unique:number
   private _similar:Map<string,number>
   private _extension:string
 
@@ -9,6 +9,7 @@ export class FileMsisdn{
     this._name = name;
     this._msisdnArr = msisdnList;
     this._extension = extension
+    this.similar = new Map<string, number>()
   }
 
   get name(): string {
@@ -27,11 +28,11 @@ export class FileMsisdn{
     this._msisdnArr = value;
   }
 
-  get unique(): string {
+  get unique(): number {
     return this._unique;
   }
 
-  set unique(value: string) {
+  set unique(value: number) {
     this._unique = value;
   }
 

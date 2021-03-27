@@ -8,19 +8,19 @@ export class DownloadService {
 
   constructor() { }
 
-  static download(listMsisdn, fileName){
-    let StringMsisdn = [];
-    StringMsisdn.push(listMsisdn[0].toString());
+  static download(msisdnList, fileName){
 
-    for (let i = 1; i < listMsisdn.length; i++) {
-      StringMsisdn.push("\n" + listMsisdn[i].toString());
-    }
-    let csv = StringMsisdn.toString();
+    let stringMsisdn = [];
+
+    stringMsisdn.push('msisdn');
+    msisdnList.forEach(msisdn => stringMsisdn.push('\n' + msisdn))
+
+    let csv = stringMsisdn.toString();
     let hiddenElement = document.createElement('a');
+
     hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
     hiddenElement.target = '_blank';
     hiddenElement.download = fileName + '.csv';
     hiddenElement.click();
   }
-
 }

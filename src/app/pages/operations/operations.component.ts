@@ -1,10 +1,10 @@
 import {Component} from '@angular/core';
 import { CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
-import { mapFilesMsisdn } from '../../shared/models/mapfilesmsisdn.model';
-import {OperationsService} from '../../services/operations.service';
-import {FileMsisdn} from '../../shared/models/filemsisdn.model';
-import {LocalstorageService} from "../../services/localstorage.service";
-import {DragUploadComponent} from "../../modules/drag-upload/drag-upload.component";
+import {FileMsisdn} from "../../shared/models/filemsisdn.model";
+import {OperationsService} from "../../services/operations.service";
+import {UploadService} from "../../services/upload.service";
+import {FilesMapModel} from "../../shared/models/filesMap.model";
+
 
 @Component({
   selector: 'app-operations',
@@ -13,33 +13,53 @@ import {DragUploadComponent} from "../../modules/drag-upload/drag-upload.compone
 })
 export class OperationsComponent {
 
-  resultName?:string;
-  operate = []
-  blackList = []
+  operation:string
+  resultName?:string
+  operateList:string[] = []
+  blackList:string[] = []
 
   onInput() {
     this.resultName = document.getElementsByClassName('form-group')[0]
       .querySelector('input').value;
   }
 
-  onLeftClick(fileName, block){
-      if (block === 'list') {
-        if(!this.operate.includes(fileName)){
-          this.operate.push(fileName)
-        }
+  onLeftClick(fileName:string, block:string){
+      if (block === 'list' && !this.operateList.includes(fileName)) {
+          this.operateList.push(fileName)
       }
+  }
+
+  processFiles() {
+    if (this.operateList.length > 0) {
+      let msisdnArr: string[] = []
+
+      this.operateList.forEach(name => msisdnArr = msisdnArr
+          .concat(FilesMapModel.get(name).msisdnArr))
+
+      if (this.blackList.length != 0) {
+        let blacklistSet = new Set<string>()
+        this.blackList.forEach(name => FilesMapModel.get(name).msisdnArr
+            .forEach(blacklistSet.add, blacklistSet))
+
+        msisdnArr = OperationsService.deleteBlackList(msisdnArr, blacklistSet)
+      }
+
+      let resultFile: FileMsisdn = new FileMsisdn(this.resultName,
+          msisdnArr, this.operation)
+
+      UploadService.addFile(resultFile)
+    }
   }
 
   onRightClick(event, fileName, block){
     event.preventDefault();
     switch (block) {
       case 'list':
-        if(!this.blackList.includes(fileName)) {
+        if (!this.blackList.includes(fileName))
           this.blackList.push(fileName)
-        }
         break;
       case 'operate':
-        this.operate.splice(this.operate.indexOf(fileName), 1)
+        this.operateList.splice(this.operateList.indexOf(fileName), 1)
         break
       case 'blackList':
         this.blackList.splice(this.blackList.indexOf(fileName), 1)
@@ -59,27 +79,8 @@ export class OperationsComponent {
     }
   }
 
-  getFilesMsisdnNames() {
-    return Array.from(mapFilesMsisdn.keys())
-  }
-
-  getOperatedArray(operation){
-    if (this.operate.length > 0) {
-      let arrFileMsisdn: FileMsisdn[] = []
-      let arrBlackListFileMsisdn: FileMsisdn[] = []
-      let blackListSet = new Set();
-      let result = []
-      this.operate.forEach(name => arrFileMsisdn.push(mapFilesMsisdn.get(name)))
-      this.blackList.forEach(name => arrBlackListFileMsisdn.push(mapFilesMsisdn.get(name)))
-
-      arrFileMsisdn.forEach(file => {
-        file.msisdnArr.forEach(msisdn => {
-          result.push(msisdn);
-        })
-      })
-      let tempFile: FileMsisdn = new FileMsisdn(this.resultName, Array.from(result), operation);
-      OperationsService.addFile(tempFile, operation, arrBlackListFileMsisdn)
-    }
+  getFileNames() {
+    return Array.from(FilesMapModel.getFileNames())
   }
 
   popMenuShow(){

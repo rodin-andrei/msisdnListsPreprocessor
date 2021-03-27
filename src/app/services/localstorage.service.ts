@@ -1,7 +1,9 @@
 import {Injectable} from '@angular/core';
 import {FileMsisdn} from "../shared/models/filemsisdn.model";
 import {OperationsService} from "./operations.service";
-import {mapFilesMsisdn} from "../shared/models/mapfilesmsisdn.model";
+import {FilesMapModel} from "../shared/models/filesMap.model";
+
+
 
 @Injectable({
   providedIn: 'root'
@@ -13,9 +15,9 @@ export class LocalstorageService {
   static getFileFromStorage(fileName) {
     let rawFile = JSON.parse(localStorage.getItem(fileName))
     let file:FileMsisdn = new FileMsisdn(fileName, rawFile._msisdnArr, "raw")
-    let similarMap = OperationsService.getUniqueSimilarMap([file],[])
+    let similarMap = OperationsService.getUniqueSimilarMap(file.msisdnArr)
 
-    file.unique = similarMap.size.toString()
+    file.unique = similarMap.size
     file.similar = new Map()
     file.extension = rawFile._extension
 
@@ -28,7 +30,7 @@ export class LocalstorageService {
   }
 
   static persistFile(file:FileMsisdn) {
-    let fileNames = new Set(mapFilesMsisdn.keys())
+    let fileNames = new Set(FilesMapModel.getFileNames())
     localStorage.setItem(file.name, JSON.stringify(file))
 
     if (localStorage.getItem(file.name) !== null) {
@@ -58,7 +60,7 @@ export class LocalstorageService {
 
       fileNames.forEach(fileName => {
         let file = LocalstorageService.getFileFromStorage(fileName)
-        mapFilesMsisdn.set(file.name, file)
+        FilesMapModel.set(file)
       })
     }
   }

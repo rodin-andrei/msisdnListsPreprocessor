@@ -1,7 +1,4 @@
 import { Injectable } from '@angular/core';
-import {FileMsisdn} from '../shared/models/filemsisdn.model';
-import {mapFilesMsisdn} from "../shared/models/mapfilesmsisdn.model";
-import {LocalstorageService} from "./localstorage.service";
 
 @Injectable({
   providedIn: 'root'
@@ -9,51 +6,32 @@ import {LocalstorageService} from "./localstorage.service";
 
 export class OperationsService {
 
-  constructor() {
-  }
+  constructor() { }
 
-  static getUniqueSimilarMap(arrayFileMsisdn: FileMsisdn[],
-                             arrBlackListFileMsisdn: FileMsisdn[]) {
-    let result = new Map<string, number>()
+  static getUniqueSimilarMap(msisdnList:string[]) {
+    let resultMap = new Map<string, number>()
 
-    arrayFileMsisdn.forEach(file => {
-      file.msisdnArr.forEach(msisdn => {
-        if (!result.has(msisdn)) {
-          result.set(msisdn, 1)
-        } else {
-          result.set(msisdn, result.get(msisdn) + 1)
-        }
-      })
-    })
-    arrBlackListFileMsisdn.forEach(file => file.msisdnArr
-      .forEach(msisdn => result.delete(msisdn)))
+    msisdnList.forEach(msisdn => {
 
-    return result
-  }
+      if(!resultMap.has(msisdn)){
+        resultMap.set(msisdn, 1)
 
-  static addFile(fileMsisdn:FileMsisdn, operation, blacklist) {
-    let mapSubscribers = OperationsService.getUniqueSimilarMap(new Array(fileMsisdn), blacklist)
-    console.log(mapSubscribers)
-    fileMsisdn.unique=mapSubscribers.size.toString();
-    fileMsisdn.extension=(fileMsisdn.extension)
-
-    if (operation == "getUnique"){
-      fileMsisdn.msisdnArr = Array.from(mapSubscribers.keys());
-    }else{
-      fileMsisdn.similar=(new Map())
-      fileMsisdn.msisdnArr=[];
-
-      for (let [key, value] of mapSubscribers) {
-        for (let i = 0; i < value; i ++){
-          fileMsisdn.msisdnArr.push(key);
-        }
-        if (value!==1){
-          fileMsisdn.similar.set(key, value);
-        }
+      }else{
+        resultMap.set(msisdn, resultMap.get(msisdn)+1)
       }
-      console.log(mapSubscribers)
+    })
+    return resultMap
+  }
+
+  static deleteBlackList(msisdnArr:string[], blackList:Set<string>) {
+
+    for (let i = 0; i < msisdnArr.length; i++) {
+        if (blackList.has(msisdnArr[i])) {
+        msisdnArr.splice(msisdnArr.indexOf(msisdnArr[i]), 1)
+        i--
+      }
     }
-    mapFilesMsisdn.set(fileMsisdn.name, fileMsisdn)
-    LocalstorageService.persistFile(fileMsisdn)
+
+    return msisdnArr
   }
 }

@@ -1,27 +1,30 @@
 <div cdkDropListGroup class="cdk-main">
+
   <div class="row">
-    <div class="col-4">
-      <div class="row">
-        <button type="button" class="btn btn-primary col-4" (click)="popMenuShow()" style="margin-left: 36px;  height: 40px;top: 10px">Operations</button>
-      </div>
-    </div>
+    <div style="width: 35px"></div>
+      <button type="button" class="btn btn-primary " (click)="operation = 'unique'; popMenuShow()"
+              style="width: 100px; height: 40px; left: 35px; top: 10px; margin-top: 10px">Unique</button>
+    <div style="width: 30px"></div>
+      <button type="button" class="btn btn-primary" (click)="operation = 'clear'; popMenuShow()"
+              style="width: 100px; height: 40px; left: 35px; top: 10px; margin-top: 10px">Clear</button>
   </div>
+
   <div class="uploaded-view-container">
     <cdk-virtual-scroll-viewport class="uploaded-view-port" itemSize="16">
       <div class="example-container">
         <div    cdkDropList
-        [cdkDropListData]="operate"
+        [cdkDropListData]="operateList"
         class="example-list"
-        (cdkDropListDropped)="drop($event)" *ngIf="getFilesMsisdnNames().length === 0; else elseBlock" >
+        (cdkDropListDropped)="drop($event)" *ngIf="getFileNames().length === 0; else elseBlock" >
         <div class="example-box" cdkDrag>{{"Uploaded Files"}}</div>
       </div>
         <ng-template #elseBlock class="else-block">
           <div    cdkDropList
-                  [cdkDropListData]="getFilesMsisdnNames()"
+                  [cdkDropListData]="getFileNames()"
                   class="example-list"
                   cdkDropListSortingDisabled
                   (cdkDropListDropped)="drop($event)">
-                  <div class="example-box" *ngFor="let fileName of getFilesMsisdnNames()" cdkDrag (click)="onLeftClick(fileName, 'list')"  (contextmenu)="onRightClick($event, fileName, 'list')">{{fileName}}</div>
+                  <div class="example-box" *ngFor="let fileName of getFileNames()" cdkDrag (click)="onLeftClick(fileName, 'list')" (contextmenu)="onRightClick($event, fileName, 'list')">{{fileName}}</div>
           </div>
         </ng-template>
       </div>
@@ -31,17 +34,17 @@
     <cdk-virtual-scroll-viewport class="operate-view-port" itemSize="16">
         <div class="example-container">
             <div    cdkDropList
-                    [cdkDropListData]="operate"
+                    [cdkDropListData]="operateList"
                     class="example-list"
-                    (cdkDropListDropped)="drop($event)" *ngIf="operate.length === 0; else elseOperateBlock" >
+                    (cdkDropListDropped)="drop($event)" *ngIf="operateList.length === 0; else elseOperateBlock" >
                 <div class="example-box" cdkDrag>{{"Operate with"}}</div>
             </div>
           <ng-template #elseOperateBlock class="else-block">
              <div cdkDropList
-                      [cdkDropListData]="operate"
+                      [cdkDropListData]="operateList"
                       class="example-list"
                       (cdkDropListDropped)="drop($event)">
-                      <div class="example-box" *ngFor="let fileName of operate" cdkDrag (click)="onLeftClick(fileName, 'operate')"  (contextmenu)="onRightClick($event, fileName, 'operate')">{{fileName}}</div>
+                      <div class="example-box" *ngFor="let fileName of operateList" cdkDrag (click)="onLeftClick(fileName, 'operate')" (contextmenu)="onRightClick($event, fileName, 'operate')">{{fileName}}</div>
              </div>
           </ng-template>
         </div>
@@ -81,14 +84,13 @@
         <div class="modal-body">
           <form>
             <div class="form-group">
-              <input type="text" class="form-control" id="recipient-name">
+              <label for="recipient-name"></label><input type="text" class="form-control" id="recipient-name">
             </div>
           </form>
         </div>
-        <div class="modal-footer d-flex">
-          <button type="button" class="btn btn-secondary mr-auto p-2" (click)="popMenuHide()">Close</button>
-          <button type="submit" class="btn btn-primary p-2" (click)="onInput(); getOperatedArray('getUnique'); popMenuHide()">Get Unique</button>
-          <button type="submit" class="btn btn-primary p-2" (click)="onInput(); getOperatedArray('clearList'); popMenuHide()">Clear List</button>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="popMenuHide()">Close</button>
+          <button type="submit" class="btn btn-primary" (click)="onInput(); processFiles(); popMenuHide()">Get</button>
         </div>
       </div>
     </div>
