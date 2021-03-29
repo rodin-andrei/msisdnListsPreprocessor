@@ -1,8 +1,7 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {NzUploadChangeParam} from 'ng-zorro-antd/upload';
 import {ParserService} from "../../services/parser.service";
 import {FileMsisdn} from '../../shared/models/filemsisdn.model';
-import {LocalstorageService} from "../../services/localstorage.service";
 import { UploadService} from "../../services/upload.service";
 import {FilesMapModel} from "../../shared/models/filesMap.model";
 
@@ -11,7 +10,7 @@ import {FilesMapModel} from "../../shared/models/filesMap.model";
   templateUrl: './drag-upload.component.html'
 })
 
-export  class DragUploadComponent implements OnInit{
+export  class DragUploadComponent {
 
   constructor(){}
 
@@ -34,9 +33,5 @@ export  class DragUploadComponent implements OnInit{
         })
       }
     })
-  }
-
-  ngOnInit(): void {
-    LocalstorageService.OnInit()
   }
 }

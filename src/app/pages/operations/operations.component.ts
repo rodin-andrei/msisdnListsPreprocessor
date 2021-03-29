@@ -14,12 +14,11 @@ import {FilesMapModel} from "../../shared/models/filesMap.model";
 export class OperationsComponent {
 
   operation:string
-  resultName?:string
   operateList:string[] = []
   blackList:string[] = []
 
   onInput() {
-    this.resultName = document.getElementsByClassName('form-group')[0]
+    return document.getElementsByClassName('form-group')[0]
       .querySelector('input').value;
   }
 
@@ -30,6 +29,7 @@ export class OperationsComponent {
   }
 
   processFiles() {
+    this.popMenuHide()
     if (this.operateList.length > 0) {
       let msisdnArr: string[] = []
 
@@ -44,7 +44,7 @@ export class OperationsComponent {
         msisdnArr = OperationsService.deleteBlackList(msisdnArr, blacklistSet)
       }
 
-      let resultFile: FileMsisdn = new FileMsisdn(this.resultName,
+      let resultFile: FileMsisdn = new FileMsisdn(this.onInput(),
           msisdnArr, this.operation)
 
       UploadService.addFile(resultFile)
