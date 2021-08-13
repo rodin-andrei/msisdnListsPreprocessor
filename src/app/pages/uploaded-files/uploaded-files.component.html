@@ -1,0 +1,20 @@
+<cdk-virtual-scroll-viewport class="view-port" itemSize="16" style="background-color: #fafafa; margin-top: 10px;">
+  <nz-list nzGrid>
+    <div nz-row [nzGutter]="16">
+      <div nz-col [nzSpan]="6" *ngFor="let file of getFiles()">
+        <nz-list-item>
+          <nz-card [nzTitle]="file.name" [nzExtra]="extraTemplate">
+            <div style="display: flex;">
+              <div style="width: 60px; "><i nz-icon nzType="download" style="cursor: pointer;" nzTheme="outline" (click)="downloadFile(file)"></i></div>
+              <div style=" text-align: center;">Records:<br>{{file.msisdnArr.length}}</div>
+              <div><i (click)="deleteFile(file.name)" style="cursor: pointer; margin-left: 50px;" nz-icon nzType="delete" nzTheme="twotone"></i></div>
+            </div>
+          </nz-card>
+          <ng-template #extraTemplate>
+            .{{file.extension}}
+          </ng-template>
+        </nz-list-item>
+      </div>
+    </div>
+  </nz-list>
+</cdk-virtual-scroll-viewport>

@@ -1,0 +1,11 @@
+<nz-upload  nzAccept=".xlsx, .xls, .csv, .txt"
+      nzType="drag"
+      [nzMultiple]="true"
+      (nzChange)="handleChange($event)"
+      [nzShowUploadList]="false"
+      [nzSize]="0" >
+      <p class="ant-upload-drag-icon">
+        <i nz-icon nzType="inbox"></i>
+      </p>
+      <p class="ant-upload-text">Click or drag file to this area to upload</p>
+</nz-upload>

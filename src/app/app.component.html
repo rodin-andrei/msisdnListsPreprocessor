@@ -1,0 +1,213 @@
+<nz-content>
+  <nz-alert *ngIf="(current === 0) && visible"
+    nzType="info"
+    nzMessage="File uploader"
+    nzDescription="Select or drag and drop all the files you want and they will appear below."
+    nzShowIcon
+    style="width: 18%; position: absolute; top: 198px; left: 6%;"
+  ></nz-alert>
+
+  <nz-alert *ngIf="(current === 0) && visible"
+    nzType="info"
+    nzMessage="Uploaded files"
+    nzDescription="All uploaded files will be stored here, even after page reload. Also you can download or delete them."
+    nzShowIcon
+    style="width: 18%; position: absolute; top: 412px; left: 6%;"
+  ></nz-alert>
+
+  <nz-alert *ngIf="(current === 0) && visible"
+    nzType="info"
+    nzMessage="Go to the second step"
+    nzShowIcon
+    style="width: 10%; position: absolute; top: 155px; right: 14%;"
+  ></nz-alert>
+
+  <nz-alert *ngIf="(current === 1) && visible"
+    nzType="info"
+    nzMessage="Set result file name"
+    nzShowIcon
+    style="width: 9%; position: absolute; top: 156px; right: 15%;"
+  ></nz-alert>
+
+  <nz-alert *ngIf="(current === 1) && visible"
+    nzType="info"
+    nzMessage="Go to the first step"
+    nzShowIcon
+    style="width: 10%; position: absolute; top: 156px; left: 14%;"
+  ></nz-alert>
+
+  <nz-alert *ngIf="(current === 1) && visible"
+    nzType="info"
+    nzMessage="Operations"
+    nzDescription="Drag the uploaded files to combine them or exclude from result file."
+    nzShowIcon
+    style="width: 18%; position: absolute; top: 240px; left: 6%;"
+  ></nz-alert>
+
+  <nz-alert *ngIf="(current === 1) && visible"
+    nzType="info"
+    nzMessage="Leaves only unique values in the result"
+    nzShowIcon
+    style="width: 9%; position: absolute; top: 238px; right: 15%;"
+  ></nz-alert>
+
+  <nz-alert *ngIf="(current === 2) && visible"
+    nzType="info"
+    nzMessage="Result"
+    nzDescription="Wait while the file is generated and just click on it to download."
+    nzShowIcon
+    style="width: 18%; position: absolute; top: 300px; left: 42%;"
+  ></nz-alert>
+
+  <ng-container>
+    <div nz-row nzJustify="center">
+      <div nz-col nzSpan="12">
+      <div style="text-align: center; margin-top: 20px ">
+        <h2 style="font-weight: normal;">MSISDN Lists Preprocessor</h2>
+      </div>
+      <div style="height: 60px; margin-top: 40px; margin-bottom: 40px;">
+        <nz-steps [nzCurrent]="current">
+          <nz-step nzTitle="File uploader" nzIcon="upload"></nz-step>
+          <nz-step nzTitle="Operations" nzIcon="ungroup"></nz-step>
+          <nz-step nzTitle="Result" [nzIcon]="loading"></nz-step>
+        </nz-steps>
+      </div>
+
+      <div style="height: 60%;" *ngIf="current === 0">
+        <app-drag-upload class="drag-upload"></app-drag-upload>
+      </div>
+      <app-upload *ngIf="current === 0"></app-upload>
+
+      <div cdkDropListGroup class="cdk-main" *ngIf="current === 1">
+        <div class="uploaded-view-container">
+          <cdk-virtual-scroll-viewport class="uploaded-view-port" itemSize="16">
+            <div class="example-container">
+              <h6>Uploaded Files</h6>
+              <div    cdkDropList
+              [cdkDropListData]="operateList"
+              class="example-list"
+              (cdkDropListDropped)="drop($event)" *ngIf="getFileNames().length === 0; else elseBlock" >
+              <div class="example-box" cdkDrag>Uploaded Files</div>
+            </div>
+              <ng-template #elseBlock class="else-block">
+                <div    cdkDropList
+                        [cdkDropListData]="getFileNames()"
+                        class="example-list"
+                        cdkDropListSortingDisabled
+                        (cdkDropListDropped)="drop($event)">
+                        <div class="example-box" *ngFor="let fileName of getFileNames()" cdkDrag (click)="onLeftClick(fileName, 'list')" (contextmenu)="onRightClick($event, fileName, 'list')">{{fileName}}</div>
+                </div>
+              </ng-template>
+            </div>
+          </cdk-virtual-scroll-viewport>
+        </div>
+        <div class="operate-view-container">
+          <cdk-virtual-scroll-viewport class="operate-view-port" itemSize="16">
+              <div class="example-container">
+                <h6>Combine msisdns</h6>
+                  <div    cdkDropList
+                          [cdkDropListData]="operateList"
+                          class="example-list"
+                          (cdkDropListDropped)="drop($event)" *ngIf="operateList.length === 0; else elseOperateBlock" >
+                      <div class="example-box" cdkDrag>Drag uploaded files here</div>
+                  </div>
+                <ng-template #elseOperateBlock class="else-block">
+                   <div cdkDropList
+                            [cdkDropListData]="operateList"
+                            class="example-list"
+                            (cdkDropListDropped)="drop($event)">
+                            <div class="example-box" *ngFor="let fileName of operateList" cdkDrag (click)="onLeftClick(fileName, 'operate')" (contextmenu)="onRightClick($event, fileName, 'operate')">{{fileName}}</div>
+                   </div>
+                </ng-template>
+              </div>
+          </cdk-virtual-scroll-viewport>
+        </div>
+      
+        <div class="operate-view-container">
+          <cdk-virtual-scroll-viewport class="operate-view-port" itemSize="16">
+            <div class="example-container">
+              <h6>Exclude msisdns</h6>
+              <div    cdkDropList
+                      [cdkDropListData]="blackList"
+                      class="example-list"
+                      (cdkDropListDropped)="drop($event)" *ngIf="blackList.length === 0; else elseBlackList" >
+                <div class="example-box" cdkDrag>Drag uploaded files here</div>
+              </div>
+              <ng-template #elseBlackList class="else-blocked">
+                <div cdkDropList
+                     [cdkDropListData]="blackList"
+                     class="example-list"
+                     (cdkDropListDropped)="drop($event)">
+                  <div class="example-box" *ngFor="let fileName of blackList" cdkDrag (click)="onLeftClick(fileName, 'blackList')"  (contextmenu)="onRightClick($event, fileName, 'blackList')">{{fileName}}</div>
+                </div>
+              </ng-template>
+            </div>
+          </cdk-virtual-scroll-viewport>
+          <div style="position: absolute; top: 214px; right: 55px;">
+            <h6>Additional options</h6>
+          </div>
+          <div style="position: absolute; top: 255px; right: 0px;">
+            Unique values&nbsp;&nbsp;
+            <nz-switch [(ngModel)]="switchValue"></nz-switch>
+          </div>
+          <p style="width: 220px; position: absolute; top: 165px; right: 165px;">Combined list of msisdns:</p>
+          <input nz-input placeholder="New file name" nzSize="default" [(ngModel)]="fName" style="width: 150px; position: absolute; top: 160px; right: 65px;" />
+          <div class="input-holder" style="position: absolute; top: 0px; right: 0px;">
+            <div class="modal fade show" id="exampleModal" tabindex="-1" style="display: none">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">Enter result name</h5>
+                    <button type="button" class="close"><span (click)="popMenuHide()">&times;</span></button>
+                  </div>
+                  <div class="modal-body">
+                    <form>
+                      <div class="form-group">
+                        <label for="recipient-name"></label><input type="text" class="form-control" id="recipient-name">
+                      </div>
+                    </form>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" (click)="popMenuHide()">Close</button>
+                    <button type="submit" class="btn btn-primary" (click)="processFiles()">Get</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="current == 2">
+        <div *ngFor="let file of getFiles()">
+        <div style="position: absolute; top: 200px; right: 40%;">
+          <h6 style="cursor: pointer;" (click)="downloadFile(file)" *ngIf="file.name == fName">
+            {{file.name}}.{{file.extension}}</h6>
+          <button nz-button nzType="primary" [nzSize]="size" nzShape="round" *ngIf="file.name == fName" (click)="downloadFile(file)">
+            <i nz-icon nzType="download"></i>
+            Download
+          </button>
+        </div>
+        </div>
+      </div>
+      <button id="help" nz-button nzType="default" (click)="tutorial()" style="position: absolute; top: 50px; left: 0px;">
+        <span>Help</span>
+      </button>
+      <button nz-button nzType="default" (click)="tryAgain()" *ngIf="current == 2" style="position: absolute; top: 160px; left: 0px;">
+        <span>Try again</span>
+      </button>
+      <button nz-button nzType="default" (click)="pre()" *ngIf="current == 1" style="position: absolute; top: 160px; left: 0px;">
+        <span>Back</span>
+      </button>
+      <button nz-button nzType="default" (click)="next()" *ngIf="current == 0" style="position: absolute; top: 160px; right: 0px;">
+        <span>Next</span>
+      </button>
+      <button nz-button nzType="default" (click)="next()" *ngIf="(current == 1) && operateList.length" style="position: absolute; top: 160px; right: 0px;">
+        <span>Next</span>
+      </button>
+      <button nz-button disabled nzType="default" *ngIf="(current == 1) && !operateList.length" style="position: absolute; top: 160px; right: 0px;">
+        <span>Next</span>
+      </button>
+      </div>
+    </div>
+  </ng-container>
+</nz-content>

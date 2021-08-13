@@ -1,0 +1,24 @@
+/* You can add global styles to this file, and also import other style files */
+body{
+    background-color: #fafafa;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none;   /* Chrome/Safari/Opera */
+    -khtml-user-select: none;    /* Konqueror */
+    -moz-user-select: none;      /* Firefox */
+    -ms-user-select: none;       /* Internet Explorer/Edge */
+    user-select: none;           /* Non-prefixed version, currently
+                                    not supported by any browser */
+}
+  
+.ant-steps-item-title:after{
+    height: 3px;
+}
+  
+.ant-steps-item-custom>.ant-steps-item-container>.ant-steps-item-icon>.ant-steps-icon{
+    line-height: 0px;
+}
+
+.ant-popover-title{
+    background-color: #40a9ff;
+    color: #ffffff;
+}
