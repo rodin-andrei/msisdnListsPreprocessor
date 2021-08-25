@@ -1,3 +1,7 @@
+<button nz-button nzType="default" (click)="deleteAllFiles()"
+        style="position: absolute; top: 160px; left: 0;">
+  <span>Clear cache</span>
+</button>
 <cdk-virtual-scroll-viewport class="view-port" itemSize="16" style="background-color: #fafafa; margin-top: 10px;">
   <nz-list nzGrid>
     <div nz-row [nzGutter]="16">
@@ -5,9 +9,33 @@
         <nz-list-item>
           <nz-card [nzTitle]="file.name" [nzExtra]="extraTemplate">
             <div style="display: flex;">
-              <div style="width: 60px; "><i nz-icon nzType="download" style="cursor: pointer;" nzTheme="outline" (click)="downloadFile(file)"></i></div>
-              <div style=" text-align: center;">Records:<br>{{file.msisdnArr.length}}</div>
-              <div><i (click)="deleteFile(file.name)" style="cursor: pointer; margin-left: 50px;" nz-icon nzType="delete" nzTheme="twotone"></i></div>
+              <div style="width: 100%; text-align: center">
+                <div *ngIf="file.msisdnArr[0]">{{file.msisdnArr[0].split('\"').join('').substring(0, 20)}}<br></div>
+                <div *ngIf="file.msisdnArr[1]">{{file.msisdnArr[1].split('\"').join('').substring(0, 20)}}<br></div>
+                <div *ngIf="file.msisdnArr[2]">{{file.msisdnArr[2].split('\"').join('').substring(0, 20)}}<br></div>
+                <div *ngIf="file.msisdnArr[2]">...<br></div>
+                <div>
+                  <div style="position: absolute; bottom: 10px; left: 10px;">
+                    <button nz-button nz-dropdown [nzDropdownMenu]="menu" nzTrigger="click" nzType="primary"
+                            nzPlacement="bottomCenter" nzShape="circle"><i nz-icon nzType="download"></i>
+                    </button>
+                    <nz-dropdown-menu #menu="nzDropdownMenu">
+                      <ul nz-menu>
+                        <li nz-menu-item (click)="downloadFile(file, 'csv')">.csv</li>
+                        <li nz-menu-item (click)="downloadFile(file, 'txt')">.txt</li>
+                      </ul>
+                    </nz-dropdown-menu>
+                  </div>
+                  <div style="position: absolute; bottom: 15px; margin-left: 30%">
+                    <b>Total: {{file.msisdnArr.length}}</b>
+                  </div>
+                  <div style="position: absolute; bottom: 10px; right: 10px;">
+                    <button nz-button nzType="primary" nzShape="circle" (click)="deleteFile(file.name)"><i nz-icon
+                                                                                                           nzType="delete"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
           </nz-card>
           <ng-template #extraTemplate>

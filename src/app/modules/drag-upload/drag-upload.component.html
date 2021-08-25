@@ -1,11 +1,13 @@
-<nz-upload  nzAccept=".xlsx, .xls, .csv, .txt"
-      nzType="drag"
-      [nzMultiple]="true"
-      (nzChange)="handleChange($event)"
-      [nzShowUploadList]="false"
-      [nzSize]="0" >
-      <p class="ant-upload-drag-icon">
-        <i nz-icon nzType="inbox"></i>
-      </p>
-      <p class="ant-upload-text">Click or drag file to this area to upload</p>
+<nz-upload nzAccept=".xlsx, .xls, .csv, .txt"
+           nzType="drag"
+           [nzMultiple]="true"
+           (nzChange)="handleChange($event)"
+           [nzShowUploadList]="false"
+           [nzSize]="0">
+  <p class="ant-upload-drag-icon" style="height: 30px ">
+    <i nz-icon *ngIf="!loading" nzType="inbox"></i>
+    <nz-spin *ngIf="loading" [nzSize]="'large'" nzSimple></nz-spin>
+  </p>
+  <p class="ant-upload-text" *ngIf="!loading">Click or drag file to this area to upload</p>
+  <p class="ant-upload-text" *ngIf="loading">Uploading</p>
 </nz-upload>

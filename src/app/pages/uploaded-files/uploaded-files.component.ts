@@ -16,7 +16,8 @@ export class UploadedFilesComponent {
   ) {}
 
   deleteAllFiles() {
-    FilesMapModel.deleteAllFiles()
+    FilesMapModel.deleteAllFiles();
+    LocalstorageService.clearAll();
   }
 
   getFiles() {
@@ -27,8 +28,8 @@ export class UploadedFilesComponent {
     return Array.from(file.similar.keys())
   }
 
-  downloadFile(file) {
-    DownloadService.download(file.msisdnArr, file.name)
+  downloadFile(file, extension: string) {
+    DownloadService.download(file.msisdnArr, file.name, extension)
   }
 
   deleteFile(fileName){

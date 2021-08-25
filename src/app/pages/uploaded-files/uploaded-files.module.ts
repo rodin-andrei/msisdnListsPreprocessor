@@ -9,6 +9,7 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
 import {NzButtonModule} from "ng-zorro-antd/button";
 import {NzIconModule} from "ng-zorro-antd/icon";
 import {NgbButtonsModule} from "@ng-bootstrap/ng-bootstrap";
+import {NzDropDownModule} from "ng-zorro-antd/dropdown";
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import {NgbButtonsModule} from "@ng-bootstrap/ng-bootstrap";
         DragDropModule,
         NzButtonModule,
         NzIconModule,
-        NgbButtonsModule
+        NgbButtonsModule,
+        NzDropDownModule
 
     ],
   declarations: [

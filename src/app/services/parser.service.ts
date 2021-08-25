@@ -18,15 +18,17 @@ export class ParserService {
       let arrayBuffer: any = fileReader.result;
       let data = new Uint8Array(arrayBuffer);
       let arr = [];
-      for (let i = 0; i != data.length; ++i) arr[i] = String.fromCharCode(data[i]);
-      let bstr = arr.join("");
-      let workbook = XLSX.read(bstr, {type: "binary"});
+      for (let i = 0; i != data.length; ++i) {
+        arr[i] = String.fromCharCode(data[i]);
+      }
+
+      let workbook = XLSX.read(arr.join(""), {type: "binary", raw: true});
       let first_sheet_name = workbook.SheetNames[0];
       let worksheet: XLSX.WorkSheet = workbook.Sheets[first_sheet_name];
-      let test:any[] =   XLSX.utils.sheet_to_json(worksheet,{ header:"A"} );
+      let test: any[] = XLSX.utils.sheet_to_json(worksheet, {header: "A"});
       test.forEach(s => {
-        let str = JSON.stringify(s)
-        str = str.substring(str.indexOf(":") + 1, str.length-1)
+        let str: string = JSON.stringify(s)
+        str = str.substring(str.indexOf(":") + 1, str.length - 1)
         result.push(str)
       })
       callback(result);

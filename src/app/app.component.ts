@@ -7,7 +7,7 @@ import {UploadService} from "./services/upload.service";
 import {FilesMapModel} from "./shared/models/filesMap.model";
 import {DownloadService} from './services/download.service';
 import {formatDate} from '@angular/common';
-import { NzMessageService } from 'ng-zorro-antd/message';
+import {NzMessageService} from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-root',
@@ -20,21 +20,21 @@ export class AppComponent implements OnInit {
   switchValue = true;
   loading: string = "check";
   current = 0;
-  fName ="Result_" + formatDate(new Date(), 'HH:mm:ss', 'en_US');
-  operation:string
-  operateList:string[] = []
-  blackList:string[] = []
+  fName = "Result_" + formatDate(new Date(), 'HH:mm:ss', 'en_US');
+  operation: string
+  operateList: string[] = []
+  blackList: string[] = []
 
   ngOnInit(): void {
     LocalstorageService.OnInit()
   }
-  
-  constructor(private message: NzMessageService) {}
+
+  constructor(private message: NzMessageService) {
+  }
 
   tryAgain(): void {
     this.current = 0;
     this.loading = "check";
-    window.location.reload();
   }
 
   pre(): void {
@@ -44,17 +44,18 @@ export class AppComponent implements OnInit {
 
   next(): void {
     this.current += 1;
-    this.fName ="Result_" + formatDate(new Date(), 'HH:mm:ss', 'en_US');
-    if(this.current == 2){
+    if (this.current == 2) {
       this.processFiles();
       this.loading = "check";
+    } else {
+      this.fName = "Result_" + formatDate(new Date(), 'HH:mm:ss', 'en_US');
     }
   }
 
   tutorial(): void {
-    if(this.visible){
+    if (this.visible) {
       this.visible = false;
-    } else{
+    } else {
       this.visible = true;
     }
   }
@@ -64,10 +65,10 @@ export class AppComponent implements OnInit {
       .querySelector('input').value;
   }
 
-  onLeftClick(fileName:string, block:string){
-      if (block === 'list' && !this.operateList.includes(fileName)) {
-          this.operateList.push(fileName)
-      }
+  onLeftClick(fileName: string, block: string) {
+    if (block === 'list' && !this.operateList.includes(fileName)) {
+      this.operateList.push(fileName)
+    }
   }
 
   processFiles() {
@@ -76,32 +77,31 @@ export class AppComponent implements OnInit {
       let msisdnArr: string[] = []
 
       this.operateList.forEach(name => msisdnArr = msisdnArr
-          .concat(FilesMapModel.get(name).msisdnArr))
+        .concat(FilesMapModel.get(name).msisdnArr))
 
       if (this.blackList.length > 0) {
         let blacklistSet = new Set<string>()
         this.blackList.forEach(name => FilesMapModel.get(name).msisdnArr
-            .forEach(blacklistSet.add, blacklistSet))
+          .forEach(blacklistSet.add, blacklistSet))
         msisdnArr = OperationsService.deleteBlackList(msisdnArr, blacklistSet)
       }
 
-      if(this.switchValue){
+      if (this.switchValue) {
         let unicSet = new Set<string>(msisdnArr);
         msisdnArr = Array.from(unicSet.values())
       }
 
       let resultFile: FileMsisdn = new FileMsisdn(this.fName,
-          msisdnArr, "csv")
+        msisdnArr, "csv")
       try {
         UploadService.addFile(resultFile)
-      }
-      catch (error) {
-        this.message.create("error", `File weighs too much, it will not be saved.`);
+      } catch (error) {
+        this.message.create("warning", `File cannot be saved in the cache because it exceeds the allowed size!`);
       }
     }
   }
 
-  onRightClick(event, fileName, block){
+  onRightClick(event, fileName, block) {
     event.preventDefault();
     switch (block) {
       case 'list':
@@ -123,9 +123,9 @@ export class AppComponent implements OnInit {
         event.currentIndex);
     } else {
       transferArrayItem(event.previousContainer.data,
-          event.container.data,
-          event.previousIndex,
-          event.currentIndex);
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex);
     }
   }
 
@@ -133,28 +133,27 @@ export class AppComponent implements OnInit {
     return Array.from(FilesMapModel.getFileNames()).reverse();
   }
 
-  popMenuShow(){
+  popMenuShow() {
     document.getElementById('exampleModal')
-      .style.display="block";
+      .style.display = "block";
     document.getElementById('exampleModal')
-      .className="popup-fade modal fade show";
+      .className = "popup-fade modal fade show";
     document.getElementsByClassName("form-group")[0]
       .querySelector('input').value = "new_result";
   }
 
-  popMenuHide(){
+  popMenuHide() {
     document.getElementById('exampleModal')
-      .style.display="none";
+      .style.display = "none";
     document.getElementById("exampleModal")
-      .className="modal fade show";
+      .className = "modal fade show";
   }
 
   getFiles() {
     return FilesMapModel.getFiles()
   }
-  
-  downloadFile(file) {
-    DownloadService.download(file.msisdnArr, file.name)
-  }
 
+  downloadFile(file, extension: string) {
+    DownloadService.download(file.msisdnArr, file.name, extension)
+  }
 }

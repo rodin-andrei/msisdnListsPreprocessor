@@ -54,6 +54,10 @@ export class LocalstorageService {
     return JSON.parse(localStorage.getItem("fileNames"))
   }
 
+  static clearAll() {
+      localStorage.clear();
+    }
+
   static OnInit() {
     if(localStorage.getItem("fileNames") != null) {
       let fileNames = this.getFileNames()

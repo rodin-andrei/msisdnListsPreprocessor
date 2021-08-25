@@ -1,24 +1,62 @@
 /* You can add global styles to this file, and also import other style files */
-body{
-    background-color: #fafafa;
-    -webkit-touch-callout: none; /* iOS Safari */
-    -webkit-user-select: none;   /* Chrome/Safari/Opera */
-    -khtml-user-select: none;    /* Konqueror */
-    -moz-user-select: none;      /* Firefox */
-    -ms-user-select: none;       /* Internet Explorer/Edge */
-    user-select: none;           /* Non-prefixed version, currently
-                                    not supported by any browser */
-}
-  
-.ant-steps-item-title:after{
-    height: 3px;
-}
-  
-.ant-steps-item-custom>.ant-steps-item-container>.ant-steps-item-icon>.ant-steps-icon{
-    line-height: 0px;
+body {
+  background-color: #fafafa;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
-.ant-popover-title{
-    background-color: #40a9ff;
-    color: #ffffff;
+.ant-steps-item-title:after {
+  height: 3px;
+}
+
+.ant-steps-item-custom > .ant-steps-item-container > .ant-steps-item-icon > .ant-steps-icon {
+  line-height: 0px;
+}
+
+.ant-popover-title {
+  background-color: #40a9ff;
+  color: #ffffff;
+}
+
+.ant-card-body {
+  padding: 12px;
+  height: 150px;
+}
+
+.ant-card-head {
+  padding: 0px 16px;
+}
+
+.anticon svg {
+  margin-bottom: 8px;
+}
+
+.ant-message-notice-content {
+  padding-top: 6px;
+  padding-right: 10px;
+  padding-bottom: 2px;
+  padding-left: 10px;
+}
+
+.ant-alert-icon {
+  margin-right: 8px;
+  margin-top: 8px;
+}
+
+@font-face {
+  font-family: MyFontFamily;
+  src: url("assets/font/Aquire-BW0ox.otf") format("truetype");
+}
+
+h2{
+  font-family: MyFontFamily;
+}
+
+.ant-btn-primary{
+  color: #1890ff;
+  background-color: #ffffff;
 }
